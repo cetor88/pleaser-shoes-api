@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "299953374596",
+    "firebase_url": "https://el-rey-33b3b-default-rtdb.firebaseio.com",
+    "project_id": "el-rey-33b3b",
+    "storage_bucket": "el-rey-33b3b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299953374596:android:3979c80cddf26b7882c9d1",
+        "android_client_info": {
+          "package_name": "com.example.pleaser_shoes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299953374596-ie4utm90tbenrtqv0250or8kmjdqp0hc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWkpJBbpdSpbinCNDK8tqJ2xmqIwO6e8Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299953374596-ie4utm90tbenrtqv0250or8kmjdqp0hc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
