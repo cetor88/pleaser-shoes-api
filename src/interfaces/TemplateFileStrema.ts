@@ -7,14 +7,14 @@ export class TemplateFileStream {
     imageThumbnail: string;
     precioCompra: string;
     precioSugerido: string;
-    tallas?: string;
+    tallas: string | Array<number>;
     nombre?:string;
 
 
     constructor( modelo: string, descripcion: string,
                  imageFull: string, imageThumbnail: string,
                  precioCompra: string, precioSugerido: string,
-                 tallas:string, nombre:string
+                 tallas: Array<number>, nombre:string
         ){
         this.modelo = modelo;
         this.descripcion = descripcion;

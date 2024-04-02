@@ -8,17 +8,12 @@ import cors from "cors";
 
 const modeloRouter = Router();
 
-modeloRouter.route('/')
+modeloRouter.route('/:page/:size')
     .get(getAllModelos, cors(coorsOptions))
     .post(createModelo, cors(coorsOptions));
 
-/*modeloRouter.route('/')
-    .get(getModelos, cors(coorsOptions))
-    .post(createModelo, cors(coorsOptions));
-*/
-modeloRouter.route('/:modeloId')
+    modeloRouter.route('/:modeloId')
     .get(getModeloById, cors(coorsOptions))
-    .delete(deleteModeloById, cors(coorsOptions));
-
+    .delete(deleteModeloById, cors(coorsOptions));    
 
 export default modeloRouter;

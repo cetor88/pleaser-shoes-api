@@ -12,6 +12,6 @@ export async function connection (): Promise<Pool>{
         user: 'root',
         password: '',
         database: 'pleaser-shoes',
-        connectionLimit: 10
+        connectionLimit: 3
     })
 }
