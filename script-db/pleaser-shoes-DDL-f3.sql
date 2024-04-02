@@ -8,24 +8,24 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema pleaser-shoes
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `mydb` ;
+DROP SCHEMA IF EXISTS `pleaser-shoes` ;
 
 -- -----------------------------------------------------
--- Schema mydb
+-- Schema pleaser-shoes
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `pleaser-shoes` DEFAULT CHARACTER SET utf8 ;
 SHOW WARNINGS;
-USE `mydb` ;
+USE `pleaser-shoes` ;
 
 -- -----------------------------------------------------
--- Table `mydb`.`factura`
+-- Table `pleaser-shoes`.`factura`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`factura` ;
+DROP TABLE IF EXISTS `pleaser-shoes`.`factura` ;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `mydb`.`factura` (
+CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`factura` (
   `idFactura` INT NOT NULL AUTO_INCREMENT,
   `noFactura` VARCHAR(45) NULL,
   `fechaCompra` DATETIME NULL,
@@ -33,23 +33,23 @@ CREATE TABLE IF NOT EXISTS `mydb`.`factura` (
   PRIMARY KEY (`idFactura`),
   CONSTRAINT `fk_factura_zapatilla`
     FOREIGN KEY (`idZapatilla`)
-    REFERENCES `mydb`.`zapatilla` (`idZapatilla`)
+    REFERENCES `pleaser-shoes`.`zapatilla` (`idZapatilla`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_factura_zapatilla_idx` ON `mydb`.`factura` (`idZapatilla` ASC) VISIBLE;
+CREATE INDEX `fk_factura_zapatilla_idx` ON `pleaser-shoes`.`factura` (`idZapatilla` ASC) VISIBLE;
 
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`imagen`
+-- Table `pleaser-shoes`.`imagen`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`imagen` ;
+DROP TABLE IF EXISTS `pleaser-shoes`.`imagen` ;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `mydb`.`imagen` (
+CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`imagen` (
   `idimagen` INT NOT NULL AUTO_INCREMENT,
   `urlImagen` VARCHAR(255) NULL,
   `urlThumbnail` VARCHAR(255) NULL,
@@ -59,12 +59,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`modelo`
+-- Table `pleaser-shoes`.`modelo`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`modelo` ;
+DROP TABLE IF EXISTS `pleaser-shoes`.`modelo` ;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `mydb`.`modelo` (
+CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`modelo` (
   `idModelo` INT NOT NULL AUTO_INCREMENT,
   `modelo` VARCHAR(45) NULL,
   `descripcion` VARCHAR(200) NULL,
@@ -74,12 +74,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`talla`
+-- Table `pleaser-shoes`.`talla`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`talla` ;
+DROP TABLE IF EXISTS `pleaser-shoes`.`talla` ;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `mydb`.`talla` (
+CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`talla` (
   `idTalla` INT NOT NULL AUTO_INCREMENT,
   `nacional` INT NULL,
   `amaricano` INT NULL,
@@ -89,12 +89,12 @@ ENGINE = InnoDB;
 SHOW WARNINGS;
 
 -- -----------------------------------------------------
--- Table `mydb`.`zapatilla`
+-- Table `pleaser-shoes`.`zapatilla`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `mydb`.`zapatilla` ;
+DROP TABLE IF EXISTS `pleaser-shoes`.`zapatilla` ;
 
 SHOW WARNINGS;
-CREATE TABLE IF NOT EXISTS `mydb`.`zapatilla` (
+CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`zapatilla` (
   `idZapatilla` INT NOT NULL AUTO_INCREMENT,
   `idModelo` INT NULL,
   `idImagen` INT NULL,
@@ -105,29 +105,29 @@ CREATE TABLE IF NOT EXISTS `mydb`.`zapatilla` (
   PRIMARY KEY (`idZapatilla`),
   CONSTRAINT `fk_id_modelo`
     FOREIGN KEY (`idModelo`)
-    REFERENCES `mydb`.`modelo` (`idModelo`)
+    REFERENCES `pleaser-shoes`.`modelo` (`idModelo`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_id_imagen`
     FOREIGN KEY (`idImagen`)
-    REFERENCES `mydb`.`imagen` (`idimagen`)
+    REFERENCES `pleaser-shoes`.`imagen` (`idimagen`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_id_talla`
     FOREIGN KEY (`idTalla`)
-    REFERENCES `mydb`.`talla` (`idTalla`)
+    REFERENCES `pleaser-shoes`.`talla` (`idTalla`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_id_modelo_idx` ON `mydb`.`zapatilla` (`idModelo` ASC) VISIBLE;
+CREATE INDEX `fk_id_modelo_idx` ON `pleaser-shoes`.`zapatilla` (`idModelo` ASC) VISIBLE;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_id_imagen_idx` ON `mydb`.`zapatilla` (`idImagen` ASC) VISIBLE;
+CREATE INDEX `fk_id_imagen_idx` ON `pleaser-shoes`.`zapatilla` (`idImagen` ASC) VISIBLE;
 
 SHOW WARNINGS;
-CREATE INDEX `fk_id_talla_idx` ON `mydb`.`zapatilla` (`idTalla` ASC) VISIBLE;
+CREATE INDEX `fk_id_talla_idx` ON `pleaser-shoes`.`zapatilla` (`idTalla` ASC) VISIBLE;
 
 SHOW WARNINGS;
 
