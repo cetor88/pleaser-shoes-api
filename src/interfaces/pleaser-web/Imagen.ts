@@ -1,8 +1,8 @@
 /* eslint-disable prettier/prettier */
 export interface Imagen{
-    idImagen: string;
+    idImagen: number;
     urlImagen: string;
-    urlImagenThumbnail: string;
+    urlThumbnail: string;
   }
 
   export interface Usuario{
@@ -12,7 +12,7 @@ export interface Imagen{
     alias: string;
     correo: string;
     password: string;
-    fechaAlta: Date;    
+    fechaAlta: Date;
   }
 
   export interface Modelo{
@@ -21,13 +21,14 @@ export interface Imagen{
     descripcion: string;
   }
 
-  export interface Factura{
-    idFactura: number;
+  export interface Zapatilla{
+    idZapatilla: number;
     idModelo: number;
-    noFactura: string;
-    talla: string;
+    idImagen: number;
+    idTalla: number;
     precioCompra: number;
-    fechaFactura: Date;
+    precioSugerido: number;
+    banVendido: boolean;
   }
 
   export interface Inventario{

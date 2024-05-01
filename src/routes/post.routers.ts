@@ -14,6 +14,6 @@ modeloRouter.route('/:page/:size')
 
     modeloRouter.route('/:modeloId')
     .get(getModeloById, cors(coorsOptions))
-    .delete(deleteModeloById, cors(coorsOptions));    
+    .delete(deleteModeloById, cors(coorsOptions));
 
 export default modeloRouter;

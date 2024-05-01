@@ -3,7 +3,7 @@
 import { Router } from "express";
 import { coorsOptions } from "../app-white-list";
 import cors from "cors";
-import { cargaFactura } from "../controllers/factura/factura.controller";
+import { cargaFactura } from "../controllers/factura.controller";
 
 const facturaRouter = Router();
 

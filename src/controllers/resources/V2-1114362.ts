@@ -1,7 +1,7 @@
 /* eslint-disable prettier/prettier */
-import { TemplateFatura } from "../../interfaces/TemplateFatura";
+import { ModeloFactura } from "../../interfaces/TemplateFatura";
 
-export const jsoModelos: Array<TemplateFatura> = [
+export const jsoModelos: Array<ModeloFactura> = [
         {
             "modelo":"ADO3000HWR/WHG/M",
             "tallas":[
@@ -306,4 +306,3 @@ export const jsoModelos: Array<TemplateFatura> = [
         }
         
     ];
-    

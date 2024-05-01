@@ -7,10 +7,10 @@ import { createPool, Pool } from "mysql2/promise";
  */
 export async function connection (): Promise<Pool>{
 
-    return await createPool({
+    return createPool({
         host: 'localhost',
         user: 'root',
-        password: '',
+        password: '12345678',
         database: 'pleaser-shoes',
         connectionLimit: 3
     })

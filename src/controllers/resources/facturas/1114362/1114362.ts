@@ -2,7 +2,7 @@
 
 import { TemplateFatura } from "../../../../interfaces/TemplateFatura";
 
-export const jsoModelos1114362: TemplateFatura= { 
+export const jsoModelos1114362: TemplateFatura= {
     fechaFactura:'25/10/2021',
     noFactura: "1114362",
     modelos:[
@@ -18,7 +18,7 @@ export const jsoModelos1114362: TemplateFatura= {
         {
             modelo:"ADO701FL/C/HP",
             tallas:[3,5,6]
-        },
+        },/*
         {
             modelo:"ADO701FL/C/R",
             tallas:[4]
@@ -158,6 +158,6 @@ export const jsoModelos1114362: TemplateFatura= {
         {
             modelo:"UNI708T/C/BU",
             tallas:[4]
-        }
+        }*/
     ]
 }
