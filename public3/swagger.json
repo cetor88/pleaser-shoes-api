@@ -11,6 +11,9 @@
 				"properties": {
 					"mensaje": {
 						"type": "string"
+					},
+					"txt": {
+						"type": "string"
 					}
 				},
 				"required": [
@@ -43,13 +46,6 @@
 							"application/json": {
 								"schema": {
 									"$ref": "#/components/schemas/Hello"
-								},
-								"examples": {
-									"Example 1": {
-										"value": {
-											"mensaje": "Saludos Hector"
-										}
-									}
 								}
 							}
 						}
