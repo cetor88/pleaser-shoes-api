@@ -1,11 +1,8 @@
-import { Hello } from "../interfaces/Hello";
-
+/* eslint-disable prettier/prettier */
 class WelcomeService {
-  public getSaludo(nombre: string): Hello {
+  public getSaludo(nombre: string): string {
     console.log("demooeoe ", nombre);
-    return {
-      mensaje: "Saliudos desde el service " + nombre,
-    };
+    return        "Saliudos desde el service " + nombre;
   }
 }
 

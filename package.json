@@ -7,7 +7,7 @@
   "main": "server.ts",
   "scripts": {
     "build": "tsoa spec-and-routes && tsc",
-    "start": "node ./dist/src/server.js",
+    "start": "npm run ./src/server.js",
     "dev": "npm run swagger && ts-node-dev ./src/server.ts",
     "prebuild": "npm run swagger",
     "swagger": "tsoa spec",

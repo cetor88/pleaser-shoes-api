@@ -3,11 +3,11 @@
   "noImplicitAdditionalProperties": "throw-on-extras",
   "controllerPathGlobs": ["./src/**/*Controller.ts"],
   "spec": {
-    "outputDirectory": "public3",
+    "outputDirectory": "public3-1",
     "specVersion": 3
   },
   "routes": {
-    "routesDir": "public3"
+    "routesDir": "public3-1"
 
   }
 }
