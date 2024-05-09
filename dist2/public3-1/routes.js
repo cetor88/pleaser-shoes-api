@@ -1,70 +1,56 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RegisterRoutes = void 0;
 /* tslint:disable */
 /* eslint-disable */
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { TsoaRoute, fetchMiddlewares, ExpressTemplateService } from '@tsoa/runtime';
+const runtime_1 = require("@tsoa/runtime");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-import { MensajeController } from '../src/controllers/mensaje.controller';
-import type { Request as ExRequest, Response as ExResponse, RequestHandler, Router } from 'express';
-
-
-
+const mensaje_controller_1 = require("../src/controllers/mensaje.controller");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-const models: TsoaRoute.Models = {
+const models = {
     "Hello": {
         "dataType": "refObject",
         "properties": {
-            "mensaje": {"dataType":"string","required":true},
-            "txt": {"dataType":"string"},
+            "mensaje": { "dataType": "string", "required": true },
+            "txt": { "dataType": "string" },
         },
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
-const templateService = new ExpressTemplateService(models, {"noImplicitAdditionalProperties":"throw-on-extras","bodyCoercion":true});
-
+const templateService = new runtime_1.ExpressTemplateService(models, { "noImplicitAdditionalProperties": "throw-on-extras", "bodyCoercion": true });
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-export function RegisterRoutes(app: Router) {
+function RegisterRoutes(app) {
     // ###########################################################################################################
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
     // ###########################################################################################################
-        app.get('/mensaje/:nombre',
-            ...(fetchMiddlewares<RequestHandler>(MensajeController)),
-            ...(fetchMiddlewares<RequestHandler>(MensajeController.prototype.getMensaje)),
-
-            function MensajeController_getMensaje(request: ExRequest, response: ExResponse, next: any) {
-            const args: Record<string, TsoaRoute.ParameterSchema> = {
-                    nombre: {"in":"path","name":"nombre","required":true,"dataType":"string"},
-            };
-
-            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-            let validatedArgs: any[] = [];
-            try {
-                validatedArgs = templateService.getValidatedArgs({ args, request, response });
-
-                const controller = new MensajeController();
-
-              templateService.apiHandler({
+    app.get('/mensaje/:nombre', ...(runtime_1.fetchMiddlewares(mensaje_controller_1.MensajeController)), ...(runtime_1.fetchMiddlewares(mensaje_controller_1.MensajeController.prototype.getMensaje)), function MensajeController_getMensaje(request, response, next) {
+        const args = {
+            nombre: { "in": "path", "name": "nombre", "required": true, "dataType": "string" },
+        };
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = templateService.getValidatedArgs({ args, request, response });
+            const controller = new mensaje_controller_1.MensajeController();
+            templateService.apiHandler({
                 methodName: 'getMensaje',
                 controller,
                 response,
                 next,
                 validatedArgs,
                 successStatus: undefined,
-              });
-            } catch (err) {
-                return next(err);
-            }
-        });
-        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
+            });
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-
-
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 }
-
+exports.RegisterRoutes = RegisterRoutes;
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

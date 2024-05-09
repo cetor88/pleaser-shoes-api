@@ -7,17 +7,23 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"Hello": {
+			"IModeloDB": {
 				"properties": {
-					"mensaje": {
+					"idModelo": {
+						"type": "number",
+						"format": "double"
+					},
+					"modelo": {
 						"type": "string"
 					},
-					"txt": {
+					"descripcion": {
 						"type": "string"
 					}
 				},
 				"required": [
-					"mensaje"
+					"idModelo",
+					"modelo",
+					"descripcion"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -45,7 +51,7 @@
 						"content": {
 							"application/json": {
 								"schema": {
-									"$ref": "#/components/schemas/Hello"
+									"type": "string"
 								}
 							}
 						}
@@ -62,6 +68,28 @@
 						}
 					}
 				]
+			}
+		},
+		"/modelo": {
+			"get": {
+				"operationId": "GetModelo",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IModeloDB"
+									},
+									"type": "array"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": []
 			}
 		}
 	},
