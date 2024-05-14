@@ -70,7 +70,19 @@
 				]
 			}
 		},
-		"/modelo": {
+		"/zapatillas": {
+			"get": {
+				"operationId": "GetZapatillas",
+				"responses": {
+					"204": {
+						"description": "No content"
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/modelos": {
 			"get": {
 				"operationId": "GetModelo",
 				"responses": {
@@ -86,6 +98,18 @@
 								}
 							}
 						}
+					}
+				},
+				"security": [],
+				"parameters": []
+			}
+		},
+		"/facturas": {
+			"get": {
+				"operationId": "GetFacturas",
+				"responses": {
+					"204": {
+						"description": "No content"
 					}
 				},
 				"security": [],

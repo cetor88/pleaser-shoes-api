@@ -18,18 +18,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MoldeloController = void 0;
+exports.FacturasController = void 0;
 const tsoa_1 = require("tsoa");
-const modelo_services_1 = require("../domain/services/modelo.services");
-let MoldeloController = class MoldeloController extends tsoa_1.Controller {
+const factura_service_1 = require("../domain/services/factura.service");
+let FacturasController = class FacturasController extends tsoa_1.Controller {
     constructor() {
         super(...arguments);
-        this.modeloServices = new modelo_services_1.ModeloServices();
+        this.facturaServices = new factura_service_1.FacturaServices();
     }
-    getModelo() {
+    /*constructor() {
+      super()
+      this.facturaServices = new FacturaServices();
+    }*/
+    getFacturas() {
         return __awaiter(this, void 0, void 0, function* () {
-            //const modeloService = new ModeloServices();
-            return yield this.modeloServices.obtenerModelos();
+            console.log("getFacturas");
+            this.facturaServices.cargaFactura();
         });
     }
 };
@@ -38,8 +42,8 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], MoldeloController.prototype, "getModelo", null);
-MoldeloController = __decorate([
-    tsoa_1.Route("modelos")
-], MoldeloController);
-exports.MoldeloController = MoldeloController;
+], FacturasController.prototype, "getFacturas", null);
+FacturasController = __decorate([
+    tsoa_1.Route("facturas")
+], FacturasController);
+exports.FacturasController = FacturasController;

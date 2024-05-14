@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-export class TemplateFileStream {
+export class TemplateFileStream1 {
     id?:number;
     modelo: string;
     descripcion: string;

@@ -8,7 +8,7 @@
 import {Request, Response } from "express";
 import { ResponseGeneric } from "../interfaces/ResponseGeneric";
 import { ModeloFactura } from "../interfaces/TemplateFatura";
-import { TemplateFileStream } from "../interfaces/TemplateFileStrema";
+import { TemplateFileStream1 } from "../interfaces/TemplateFileStrema";
 import fs from 'fs';
 import csv from "csv-parse";
 import request from 'request';
@@ -23,7 +23,7 @@ const storageRef = storage_Ref;
 
 
 export async function cargaFactura(req: Request, res: Response):  Promise <Response> {
-    await cargaCSV().then(  async (  modelosCsv: TemplateFileStream[] ) => {
+    await cargaCSV().then(  async (  modelosCsv: TemplateFileStream1[] ) => {
 
         const jsonFactura = jsoModelos1114362;
         const fechaFactura = new Date(jsonFactura.fechaFactura);
@@ -32,7 +32,7 @@ export async function cargaFactura(req: Request, res: Response):  Promise <Respo
 
         jsonFactura.modelos.forEach( async (modeloTemplate: ModeloFactura, index: number ) =>{
             let banEncontrado = false;
-            modelosCsv.forEach( async ( csvRow: TemplateFileStream )=>{
+            modelosCsv.forEach( async ( csvRow: TemplateFileStream1 )=>{
                     if ( csvRow.modelo === modeloTemplate.modelo){
                         banEncontrado=true;
                         csvRow.nombre = "PSW-"+ new Date().getTime();
@@ -40,7 +40,7 @@ export async function cargaFactura(req: Request, res: Response):  Promise <Respo
                         csvRow.id = 0;
                         csvRow.modelo = csvRow.modelo.replace( new RegExp('/', 'g' ),'*');
                         await saveImagenFb(csvRow);
-                        const tempFile: TemplateFileStream = {...csvRow};
+                        const tempFile: TemplateFileStream1 = {...csvRow};
 
                         //arrSalida.push(tempFile);
                         const imagen: Imagen   = await saveImagenDb(tempFile);
@@ -88,16 +88,16 @@ export async function cargaFactura(req: Request, res: Response):  Promise <Respo
 
 
 
-async function cargaCSV(): Promise<Array<TemplateFileStream>> { // 1.- funcion que el recupera el array del csv
+async function cargaCSV(): Promise<Array<TemplateFileStream1>> { // 1.- funcion que el recupera el array del csv
 
     return new Promise((resolve,reject)=>{
-        const templateArrayStream  = new Array<TemplateFileStream>();
+        const templateArrayStream  = new Array<TemplateFileStream1>();
         return  fs.createReadStream(urlCSV).pipe(csv({}))
         .on('data', async (data)=> {
             const descripcion = new String(data[1]).replace('"', ''); // descripcion
             /* data[0]: PLEASER_ITEM, data[9]: IMAGE_FULL, data[10]: IMAGE_THUMBAIL
             data[7]: WHOLESALE_PRICE_US, data[14]: MSRP_USD_FOR_INTL_ACCT */
-            const templateFileStream = new TemplateFileStream(data[0], descripcion, data[9], data[10], data[7], data[14], [], "");
+            const templateFileStream = new TemplateFileStream1(data[0], descripcion, data[9], data[10], data[7], data[14], [], "");
             templateArrayStream.push(templateFileStream);
         })
         .on ('end',  async() =>{
@@ -110,7 +110,7 @@ async function cargaCSV(): Promise<Array<TemplateFileStream>> { // 1.- funcion q
     });
 }
 
-async function saveImagenFb(modeloCSV: TemplateFileStream): Promise<any> { // 3.- Carga en FB en el storage
+async function saveImagenFb(modeloCSV: TemplateFileStream1): Promise<any> { // 3.- Carga en FB en el storage
     const requestSettings = {
         url: modeloCSV.imageFull,
         method: 'GET',
@@ -141,7 +141,7 @@ async function saveImagenFb(modeloCSV: TemplateFileStream): Promise<any> { // 3.
     );
 }
 
-async function saveImagenDb(imagen: TemplateFileStream): Promise<Imagen>{ // 4.- Almacena la imagen en el catalogo de base de datos
+async function saveImagenDb(imagen: TemplateFileStream1): Promise<Imagen>{ // 4.- Almacena la imagen en el catalogo de base de datos
     console.log('Imagen-> ', imagen?.modelo );
     console.log('Imagen-> ', imagen?.modelo.replace( /\*/g, '\/') );
     const image: Imagen  = {
@@ -168,7 +168,7 @@ async function saveImagenDb(imagen: TemplateFileStream): Promise<Imagen>{ // 4.-
     });
 }
 
-async function saveModeloDb(item: TemplateFileStream): Promise<Modelo>{ // 5.- Almacena el modelo en el catalog de la base de datos
+async function saveModeloDb(item: TemplateFileStream1): Promise<Modelo>{ // 5.- Almacena el modelo en el catalog de la base de datos
     const conn = await connection();
     const modelo: Modelo  = {
         idModelo: 0,

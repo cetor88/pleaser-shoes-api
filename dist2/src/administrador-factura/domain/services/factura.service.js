@@ -9,22 +9,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ModeloRepositoryMysql = void 0;
-/* eslint-disable prettier/prettier */
-const conection_1 = require("../../conection");
-class ModeloRepositoryMysql {
-    getAllModelos() {
+exports.FacturaServices = void 0;
+const factura_repository_1 = require("../../infracestructure/factura.repository");
+class FacturaServices {
+    constructor() {
+        this.facturaResposiroryMsql = new factura_repository_1.FacturaResposiroryMsql();
+    }
+    cargaFactura() {
         return __awaiter(this, void 0, void 0, function* () {
-            const conn = yield conection_1.connection();
-            return yield conn
-                .query("SELECT * FROM modelo")
-                .then((response) => {
-                return response[0];
-            })
-                .catch((error) => {
-                return error;
-            });
+            return yield this.facturaResposiroryMsql.cargaFactura();
         });
     }
 }
-exports.ModeloRepositoryMysql = ModeloRepositoryMysql;
+exports.FacturaServices = FacturaServices;

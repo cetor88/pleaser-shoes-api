@@ -102,7 +102,7 @@ function cargaCSV() {
                 const descripcion = new String(data[1]).replace('"', ''); // descripcion
                 /* data[0]: PLEASER_ITEM, data[9]: IMAGE_FULL, data[10]: IMAGE_THUMBAIL
                 data[7]: WHOLESALE_PRICE_US, data[14]: MSRP_USD_FOR_INTL_ACCT */
-                const templateFileStream = new TemplateFileStrema_1.TemplateFileStream(data[0], descripcion, data[9], data[10], data[7], data[14], [], "");
+                const templateFileStream = new TemplateFileStrema_1.TemplateFileStream1(data[0], descripcion, data[9], data[10], data[7], data[14], [], "");
                 templateArrayStream.push(templateFileStream);
             }))
                 .on('end', () => __awaiter(this, void 0, void 0, function* () {

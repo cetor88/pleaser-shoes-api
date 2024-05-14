@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.TemplateFileStream1 = void 0;
-/* eslint-disable prettier/prettier */
-class TemplateFileStream1 {
+exports.TemplateFileStream = void 0;
+class TemplateFileStream {
     constructor(modelo, descripcion, imageFull, imageThumbnail, precioCompra, precioSugerido, tallas, nombre) {
         this.modelo = modelo;
         this.descripcion = descripcion;
@@ -14,4 +13,4 @@ class TemplateFileStream1 {
         this.nombre = nombre;
     }
 }
-exports.TemplateFileStream1 = TemplateFileStream1;
+exports.TemplateFileStream = TemplateFileStream;

@@ -18,18 +18,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MoldeloController = void 0;
+exports.ZapatillaController = void 0;
 const tsoa_1 = require("tsoa");
-const modelo_services_1 = require("../domain/services/modelo.services");
-let MoldeloController = class MoldeloController extends tsoa_1.Controller {
-    constructor() {
-        super(...arguments);
-        this.modeloServices = new modelo_services_1.ModeloServices();
-    }
-    getModelo() {
+let ZapatillaController = class ZapatillaController extends tsoa_1.Controller {
+    getZapatillas() {
         return __awaiter(this, void 0, void 0, function* () {
-            //const modeloService = new ModeloServices();
-            return yield this.modeloServices.obtenerModelos();
+            console.log("getZapatillas");
         });
     }
 };
@@ -38,8 +32,8 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)
-], MoldeloController.prototype, "getModelo", null);
-MoldeloController = __decorate([
-    tsoa_1.Route("modelos")
-], MoldeloController);
-exports.MoldeloController = MoldeloController;
+], ZapatillaController.prototype, "getZapatillas", null);
+ZapatillaController = __decorate([
+    tsoa_1.Route("zapatillas")
+], ZapatillaController);
+exports.ZapatillaController = ZapatillaController;

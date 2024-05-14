@@ -4,13 +4,13 @@ import csv from "csv-parse";
 import {Request, Response } from "express";
 import fs from 'fs';
 import request from 'request';
+import { TemplateFileStream } from "src/administrador-factura/domain/models/TemplateFileStream";
 
 import { connection } from "../conection";
 import { ExistenciasPleaser } from "../interfaces/ExistenciasPleaser";
 import { ImagenPleaser } from "../interfaces/ImagenPleaser";
 import { ResponseGeneric } from "../interfaces/ResponseGeneric";
 import { ModeloFactura } from "../interfaces/TemplateFatura";
-import { TemplateFileStream } from '../interfaces/TemplateFileStrema';
 import {jsoModelos1114362} from './resources/facturas/1114362/1114362';
 import { storage_Ref } from "./resources/service.acount";
 

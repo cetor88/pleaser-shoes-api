@@ -8,7 +8,11 @@ const runtime_1 = require("@tsoa/runtime");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const mensaje_controller_1 = require("./../src/controllers/mensaje.controller");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+const ZapatillaController_1 = require("./../src/administrador-zapatilla/application/ZapatillaController");
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const ModeloController_1 = require("./../src/administrador-modelo/application/ModeloController");
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+const FacturaController_1 = require("./../src/administrador-factura/application/FacturaController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const models = {
     "IModeloDB": {
@@ -52,7 +56,28 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/modelo', ...(runtime_1.fetchMiddlewares(ModeloController_1.MoldeloController)), ...(runtime_1.fetchMiddlewares(ModeloController_1.MoldeloController.prototype.getModelo)), function MoldeloController_getModelo(request, response, next) {
+    app.get('/zapatillas', ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController)), ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController.prototype.getZapatillas)), function ZapatillaController_getZapatillas(request, response, next) {
+        const args = {};
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = templateService.getValidatedArgs({ args, request, response });
+            const controller = new ZapatillaController_1.ZapatillaController();
+            templateService.apiHandler({
+                methodName: 'getZapatillas',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+            });
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/modelos', ...(runtime_1.fetchMiddlewares(ModeloController_1.MoldeloController)), ...(runtime_1.fetchMiddlewares(ModeloController_1.MoldeloController.prototype.getModelo)), function MoldeloController_getModelo(request, response, next) {
         const args = {};
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
@@ -61,6 +86,27 @@ function RegisterRoutes(app) {
             const controller = new ModeloController_1.MoldeloController();
             templateService.apiHandler({
                 methodName: 'getModelo',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+            });
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/facturas', ...(runtime_1.fetchMiddlewares(FacturaController_1.FacturasController)), ...(runtime_1.fetchMiddlewares(FacturaController_1.FacturasController.prototype.getFacturas)), function FacturasController_getFacturas(request, response, next) {
+        const args = {};
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = templateService.getValidatedArgs({ args, request, response });
+            const controller = new FacturaController_1.FacturasController();
+            templateService.apiHandler({
+                methodName: 'getFacturas',
                 controller,
                 response,
                 next,

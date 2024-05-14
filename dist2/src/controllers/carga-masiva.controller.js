@@ -25,9 +25,9 @@ exports.getImagenFromServer = exports.cargarMasivaCSV_refact = exports.cargarMas
 const csv_parse_1 = __importDefault(require("csv-parse"));
 const fs_1 = __importDefault(require("fs"));
 const request_1 = __importDefault(require("request"));
+const TemplateFileStream_1 = require("src/administrador-factura/domain/models/TemplateFileStream");
 const conection_1 = require("../conection");
 const ResponseGeneric_1 = require("../interfaces/ResponseGeneric");
-const TemplateFileStrema_1 = require("../interfaces/TemplateFileStrema");
 const _1114362_1 = require("./resources/facturas/1114362/1114362");
 const service_acount_1 = require("./resources/service.acount");
 const storageRef = service_acount_1.storage_Ref;
@@ -104,7 +104,7 @@ function cargaStreamOfFile() {
                 data[7]: WHOLESALE_PRICE_US
                 data[14]: MSRP_USD_FOR_INTL_ACCT
                 */
-                const templateFileStream = new TemplateFileStrema_1.TemplateFileStream(data[0], descripcion, data[9], data[10], data[7], data[14], [], "");
+                const templateFileStream = new TemplateFileStream_1.TemplateFileStream(data[0], descripcion, data[9], data[10], data[7], data[14], [], "");
                 templateArrayStream.push(templateFileStream);
             }))
                 .on('end', () => __awaiter(this, void 0, void 0, function* () {
