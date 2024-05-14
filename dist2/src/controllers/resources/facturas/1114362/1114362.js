@@ -13,11 +13,11 @@ exports.jsoModelos1114362 = {
         {
             modelo: "ADO701/C/B",
             tallas: [2, 4]
-        },
+        } /*,
         {
-            modelo: "ADO701FL/C/HP",
-            tallas: [3, 5, 6]
-        }, /*
+            modelo:"ADO701FL/C/HP",
+            tallas:[3,5,6]
+        },
         {
             modelo:"ADO701FL/C/R",
             tallas:[4]
@@ -123,7 +123,6 @@ exports.jsoModelos1114362 = {
         },
         {
             modelo:"SKY308WHG/C/C-BPG",
-            
             tallas:[2,3,4]
         },
         {

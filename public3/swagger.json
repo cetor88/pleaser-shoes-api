@@ -105,7 +105,7 @@
 			}
 		},
 		"/facturas": {
-			"get": {
+			"put": {
 				"operationId": "GetFacturas",
 				"responses": {
 					"204": {

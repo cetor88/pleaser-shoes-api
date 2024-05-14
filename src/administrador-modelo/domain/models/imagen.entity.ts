@@ -2,5 +2,5 @@
 export default interface IImagenDB {
     idImagen: number;
     urlImagen: string;
-    urlThumbail: string;
+    urlThumbnail: string;
 }

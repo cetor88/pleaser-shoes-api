@@ -1,4 +1,4 @@
-import { Controller, Get, Route } from "tsoa";
+import { Controller, Put, Route } from "tsoa";
 
 import { FacturaServices } from "../domain/services/factura.service";
 
@@ -10,7 +10,7 @@ export class FacturasController extends Controller {
     super()
     this.facturaServices = new FacturaServices();
   }*/
-  @Get()
+  @Put()
   async getFacturas(): Promise<void> {
     console.log("getFacturas");
     this.facturaServices.cargaFactura();

@@ -10,7 +10,7 @@ import IZapatillaDB from "src/administrador-modelo/domain/models/zapatilla.entit
 import { TemplateFileStream } from "../domain/models/TemplateFileStream";
 import { IFacturaRepository } from "../domain/repositories/FacturaInterface";
 import fs from 'fs';
-import { storage_Ref } from "../../../src/controllers/resources/service.acount";
+ import { storage1, storage_Ref, storage_Ref1 } from "../../../src/controllers/resources/service.acount";
 import csv from "csv-parse";
 import request from "request";
 import { connection } from "../../conection";
@@ -18,7 +18,8 @@ import { ResponseGeneric } from "../../../src/interfaces/ResponseGeneric";
 import { jsoModelos1114362 } from "../../../src/controllers/resources/facturas/1114362/1114362";
 import { ModeloFactura } from "../../../src/interfaces/TemplateFatura";
 
-
+import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable, uploadString } from "firebase/storage";
+import { GetSignedUrlConfig, SaveOptions, UploadOptions } from "@google-cloud/storage";
 
 export class FacturaResposiroryMsql implements IFacturaRepository {
 
@@ -38,23 +39,23 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
                             csvRow.nombre = "PSW-"+ new Date().getTime();
                             csvRow.tallas = modeloTemplate.tallas;
                             csvRow.id = 0;
-                            csvRow.modelo = csvRow.modelo.replace( new RegExp('/', 'g' ),'*');
+                            csvRow.modelo = csvRow.modelo.replace( new RegExp('/', 'g' ),'_');
                             await this.saveImagenFb(csvRow);
                             const tempFile: TemplateFileStream = {...csvRow};
                             //arrSalida.push(tempFile);
                             const imagen: IImagenDB   = await this.saveImagenDb(tempFile);
                             const modelo: IModeloDB   = await this.saveModeloDb(tempFile);
                             for await (const item of tempFile?.tallas) {
-                                const factura: IZapatillaDB  = {
+                                const zapatilla: IZapatillaDB  = {
                                     idZapatilla: 0,
                                     idModelo: modelo.idModelo,
                                     idImagen: imagen.idImagen,
                                     idTalla: Number(item),
-                                    precio: Number(tempFile.precioCompra),
+                                    precioCompra: Number(tempFile.precioCompra),
                                     precioSugerido: Number(tempFile.precioSugerido),
                                     banVendido: false
                                 };
-                                await this.saveFacturaDb(factura);
+                                await this.saveFacturaDb(zapatilla);
                                 //const itemFactura: Factura = await saveFacturaDb(factura);
                                 /*const inventario: Inventario = {
                                     idInventario: 0,
@@ -105,7 +106,7 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
 
     async saveImagenFb(modeloCSV: TemplateFileStream): Promise<any> {
         const requestSettings = {
-            url: modeloCSV.imageFull,
+            url: modeloCSV.imageThumbnail,
             method: 'GET',
             encoding: null
         };
@@ -113,22 +114,18 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
             requestSettings,
             async  function (error, response, body): Promise<void> {
                 if (!error && response.statusCode == 200) {
-                    const base64EncodedImageString = body;
-                    const mimeType = 'image/jpeg';
-    
-                    const metadata = {
-                        contentType: mimeType
+//                    const imagebuffer: Buffer = new Buffer(body);
+                    const options: SaveOptions = {
+                        metadata: {
+                            contentType: 'image/jpeg',
+                        },
+                        predefinedAcl: 'publicRead',
+                        public: true
                     };
-                    const imagebuffer: Buffer = new Buffer(base64EncodedImageString);
-                    const file = await storage_Ref.file( 'pleaser-shoes/' + modeloCSV.modelo);
-    
-                    file.save( imagebuffer, { metadata: metadata},
-                        ((error: any, ) => {
-                            if (error) {
-                                console.log('Ha ocurrido un errror: ', error);
-                            }
-                        } )
-                    );
+                    const bucket = storage_Ref.file("pleaser-shoes/" + modeloCSV.modelo + ".jpeg");
+                    await bucket.save(body, options);
+                    const metaData = await bucket.getMetadata();
+                    console.log(metaData[0].mediaLink);
                 }
             }
         );
@@ -140,7 +137,7 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
         const image: IImagenDB  = {
             idImagen: 0,
             urlImagen: imagen.imageFull,
-            urlThumbail: imagen.imageThumbnail
+            urlThumbnail: imagen.imageThumbnail
         };
     
         const conn = await connection();

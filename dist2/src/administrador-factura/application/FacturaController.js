@@ -38,7 +38,7 @@ let FacturasController = class FacturasController extends tsoa_1.Controller {
     }
 };
 __decorate([
-    tsoa_1.Get(),
+    tsoa_1.Put(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Promise)

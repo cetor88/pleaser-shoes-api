@@ -26,7 +26,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FacturaResposiroryMsql = void 0;
 const TemplateFileStream_1 = require("../domain/models/TemplateFileStream");
 const fs_1 = __importDefault(require("fs"));
-// import { storage_Ref } from "src/controllers/resources/service.acount";
 const service_acount_1 = require("../../../src/controllers/resources/service.acount");
 const csv_parse_1 = __importDefault(require("csv-parse"));
 const request_1 = __importDefault(require("request"));
@@ -52,7 +51,7 @@ class FacturaResposiroryMsql {
                             csvRow.nombre = "PSW-" + new Date().getTime();
                             csvRow.tallas = modeloTemplate.tallas;
                             csvRow.id = 0;
-                            csvRow.modelo = csvRow.modelo.replace(new RegExp('/', 'g'), '*');
+                            csvRow.modelo = csvRow.modelo.replace(new RegExp('/', 'g'), '_');
                             yield this.saveImagenFb(csvRow);
                             const tempFile = Object.assign({}, csvRow);
                             //arrSalida.push(tempFile);
@@ -61,16 +60,16 @@ class FacturaResposiroryMsql {
                             try {
                                 for (var _b = __asyncValues(tempFile === null || tempFile === void 0 ? void 0 : tempFile.tallas), _c; _c = yield _b.next(), !_c.done;) {
                                     const item = _c.value;
-                                    const factura = {
+                                    const zapatilla = {
                                         idZapatilla: 0,
                                         idModelo: modelo.idModelo,
                                         idImagen: imagen.idImagen,
                                         idTalla: Number(item),
-                                        precio: Number(tempFile.precioCompra),
+                                        precioCompra: Number(tempFile.precioCompra),
                                         precioSugerido: Number(tempFile.precioSugerido),
                                         banVendido: false
                                     };
-                                    yield this.saveFacturaDb(factura);
+                                    yield this.saveFacturaDb(zapatilla);
                                 }
                             }
                             catch (e_1_1) { e_1 = { error: e_1_1 }; }
@@ -116,25 +115,25 @@ class FacturaResposiroryMsql {
     saveImagenFb(modeloCSV) {
         return __awaiter(this, void 0, void 0, function* () {
             const requestSettings = {
-                url: modeloCSV.imageFull,
+                url: modeloCSV.imageThumbnail,
                 method: 'GET',
                 encoding: null
             };
             return request_1.default(requestSettings, function (error, response, body) {
                 return __awaiter(this, void 0, void 0, function* () {
                     if (!error && response.statusCode == 200) {
-                        const base64EncodedImageString = body;
-                        const mimeType = 'image/jpeg';
-                        const metadata = {
-                            contentType: mimeType
+                        //                    const imagebuffer: Buffer = new Buffer(body);
+                        const options = {
+                            metadata: {
+                                contentType: 'image/jpeg',
+                            },
+                            predefinedAcl: 'publicRead',
+                            public: true
                         };
-                        const imagebuffer = new Buffer(base64EncodedImageString);
-                        const file = yield service_acount_1.storage_Ref.file('pleaser-shoes/' + modeloCSV.modelo);
-                        file.save(imagebuffer, { metadata: metadata }, ((error) => {
-                            if (error) {
-                                console.log('Ha ocurrido un errror: ', error);
-                            }
-                        }));
+                        const bucket = service_acount_1.storage_Ref.file("pleaser-shoes/" + modeloCSV.modelo + ".jpeg");
+                        yield bucket.save(body, options);
+                        const metaData = yield bucket.getMetadata();
+                        console.log(metaData[0].mediaLink);
                     }
                 });
             });
@@ -147,7 +146,7 @@ class FacturaResposiroryMsql {
             const image = {
                 idImagen: 0,
                 urlImagen: imagen.imageFull,
-                urlThumbail: imagen.imageThumbnail
+                urlThumbnail: imagen.imageThumbnail
             };
             const conn = yield conection_1.connection();
             const sql = 'INSERT INTO imagen SET ? ';

@@ -98,7 +98,7 @@ function RegisterRoutes(app) {
         }
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    app.get('/facturas', ...(runtime_1.fetchMiddlewares(FacturaController_1.FacturasController)), ...(runtime_1.fetchMiddlewares(FacturaController_1.FacturasController.prototype.getFacturas)), function FacturasController_getFacturas(request, response, next) {
+    app.put('/facturas', ...(runtime_1.fetchMiddlewares(FacturaController_1.FacturasController)), ...(runtime_1.fetchMiddlewares(FacturaController_1.FacturasController.prototype.getFacturas)), function FacturasController_getFacturas(request, response, next) {
         const args = {};
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];

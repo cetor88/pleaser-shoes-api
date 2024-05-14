@@ -3,16 +3,40 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.storage_Ref = void 0;
+exports.storage1 = exports.storage_Ref1 = exports.storage_Ref = void 0;
+const app_1 = require("firebase/app");
+const storage_1 = require("firebase/storage");
 const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const service_acount = {
+    //type: "service_account",
     projectId: "el-rey-33b3b",
+    //private_key_id: "6e30a5181377450a5e81f8f7e805da9df94216c1",
+    privateKey: "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDWr2BMO4RbDfeX\naUP3roxTZbVF0C8HdT1ixdsBluPF3gw00787Yjj7WFL16qta9fU/06tLJYpXB8aZ\nFBPcZ7bN1GNDd/pVU9olqUHpUSspHMPq12v+tVDcIRw0nP4vUjaDOm9OluEIeNYF\nMZMuh+jE1+iI3cXSvXc/dLz0X685AMqWRjyldp1mCRTvrr1a7+lxqnTZ+cWUFwog\n3TV6TDI5u9nZRNTZKCghz8k7j7RWLrGTusNxxUr0ZHTZ4KY7MvwqnoG/wm7Ycrp7\nimQLS5Mf932yjq1PKlVZaFFkSJN9i8YrcTE9diwshVF7oG8b/t7H/cz1Kd9YXmNN\nWGnvb3a3AgMBAAECggEAZouOq9sh9XxOb3xQgtZVIODMHXS7ggx2Ld/kJHY2hiTy\nH6mlBnB8V1JxDhXxk5k4dCxe/Z4I3llQe34jnnvLzbVNVMTSRj+vS531ZcTnoNOk\noWAUra1d2kfWeSskHuZeM4CN+jQHeUx+rixn6Snx/VRENlv4ShlGBIF2YCP0Rn1C\nUAx/CwA+V6AQWeyo/xF1/xtZy8SXacHjCi4TRttGuFeNbS9HOkjHEGQwGk9al/cH\nWadSGLt0XfJCwwQyTnOxS/H4QrgQj+eNc6rhDORvNmdeUHqppUCiTdNedTvINyEU\nhYzDjtlF+TtsAjSWM/srLTg3qgAE3gE7YUzIfY6eAQKBgQDsH/NQQxWnVQVmab1y\nfKKiSjZnXyt/kc5bBbqJWG1WMckx68F7tSlFW5bawvX7Ol1dRBcPc7ASLgeMOumI\n5K9cPbpTlEAL8Zyjl1z6se9sOWLXELdoid/CZvEe7Wudd6uhQpyPJyZWtFMug2Uj\nREj7FiC4Gc1m5hDwWo7sWQsQoQKBgQDowXBvwfevR6fT/oqetcjzifgiW1m6q+o9\nTV8DXb6PdOQme4IA8Ay+lfqlFC5CLOE7k1zzQY3R6yRP4XGK9xQUpJJ/hIwbhohj\neaqG7A8M1tNJmhztPEbp+OVmVvvcjLOgcHEdpD15212ZmdJKAZHp6CMLSXh7FF7n\n1qdj/OrQVwKBgQCcA4hakdiu1UhaIKeiC6PRo0NLDeDJy2cTUTetJBYqC38qUuFm\ngY6hWyDTrlmlAy1JQIIUHZZKjMtD5nEDmEYdplOEgcHHon6iwJIYupS9ZzVdcJge\npGqKIkZS7wBZ7QYj6MVU+MMmKsODSiH7KVUnQbmgqrvCr2SlytAAbd0XwQKBgFf3\nrAgA9hx/53Ue0cM0DzPEJEzP27TKfqgWkt9R0dCkLApDSZoTH630Pxue6fDGx4Vd\np5akYvZAeaPbH6+WvDclD90z+kP475kxBXsiwnlmw8ogfehHjMGm+QRZwazUXJs5\ng/bg+P8SImkIEss3lq8htgTxCqDxzQCwRulqUFDXAoGAY8+5dboKZF4PEfQJPsVy\nKs786jwS4+cCf5Y9JkJXEVufBwJbC3EuiGFSfzl1S2vPueJDcOw0phWFHYKytF42\no1L7gwQpy88o4aGLdNnL6C7pAd6y9KcqliLi5F99vT6ne/Ok7LKLINcIC3hJA/px\nlqeOFXfFbFz11csKHPISJ3g=\n-----END PRIVATE KEY-----\n",
     clientEmail: "firebase-adminsdk-6sihz@el-rey-33b3b.iam.gserviceaccount.com",
-    privateKey: "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC5ir6xKBoTNEtQ\nIe4mqjRCVczHWW5Bcqa/JdicZujzcwog6tEt9z1kouRNibfuitqTG2XQvVpAHatC\nGGg7yx7eY+eZ4ZxabXV4+t8E9YrCskYH0E+Eg3F8Ggy0hyOFgNQyp7AK9OOUmF2A\nFnNvqpm+kCosbnOXufE5Z1/yC9vEyWga15sVcZ+2eDSiHUHWhcRudtXSK1dreRJ7\nLPaXjplKLz/r0XkKBUyxYL1/QzJ2j0NCf6gt8M0XkVWy8/ETu8JT7N2T3omJdEew\n1xBl7hVZntTxDHealutpoDH1j4/BpM0cUxvv1Fg83AMnm8LMzzvWTKL0iONGw/bU\n80K9P01ZAgMBAAECggEADJAh8FHkTheU3+SkQPb2WeWAW6EpD4JpWvj/jTuEm3NX\nJLpxlniurgE/jyZ7j0nUmfBZeQRRN5Uqsut/J0lOGkXOeUNm+FKACUSHVEkh76Pt\njPrkX3cc+Ie1A4ZA9/mspI9pIpzJShb1AcbDYzS8e0Q8rsx9xDDBbh8bRoLaCx1w\nUvuIwbFP4/XbGK6M1WUtw7AFa/xseIpr8DsX/LdhsjdkUYiPz5RU5P50elS7GSNx\n9MM+Yv2JSBAusmuv/0T27MJ5XMuAhNA3Ak3RiQGs26egAJ3JmjK0qNJnirXV110D\n2W684jQVxQk8l53jpZmfBlrk5sspLZMaf4guBFQi3wKBgQD2rVHfSCZE4FCqoTNv\nCVQiBU79VHfHq57X6PxJy4I9bcXXkpHr/bU4jTKJcNhtSv6J7CI7ZYxEtgc7Sjqj\nOmqFrlqxVZKwwDpRUAzTCVhVVzh1JF8MsY77tmK/h5/i+sdYPEr6v2wrg3aujoJf\nniPQ7uhspwZ0L0HByAQTbRIXFwKBgQDAjexv5cBCVNPp+Ayq2rFShINdYT2ASl9o\nXkRkdu8db0HFwNZ6NEFIXGiAODr6Xjb7Q+R/bpo6ANLzZ5OjHg6uHD7VFj0Amlb2\nQvlhvtGyqfY+jlr3PgxqYGwRiEABZZQ05lgDIss68BXxAST3yu/NUxqG6fYpeZ+R\nO0cwNPeFDwKBgCuyDfOoWycOORvQjETZ+S5BlHlpcgJLk0qZub70rrBk9ou2KeUM\nvwIyeMZB2AScKTSTQIkW9t7hA6zr/DEX0vC1LtmE2AQ5ONtYe70SRbRwS87sT233\nMeXCrAFTa+4QECnAHGQIbofStL48/jkj0SJcf41nlMwV5ucFoDs0seSnAoGAGQDU\n2Nrekj5tng4FpxHqwKpQXInJ8KS3qtfCzcDb39iYk9MshoXOjFTjhPLIRcaCITJ5\ns0prYGjG+7BRbXbztQwZ5JWUqkVgUW308ApVNHv5a7oUedJmzlFi9wvYM9Y63nui\nphWYijiuwLLDWCHT7beC1E4BFvWiELu/zLS0B2UCgYAy1rs810LZQxZ2jJCBZuqB\nZlTFI0LSC152TezkBMx8y+ifXSRu00uMmtyPqtiUE9fb77tfS9ZrwF4N6VNR5Su6\nYTxf5VlEkj0Rsl2XgoFTTSstFLDzvF/C7UZE+Z1T/9SR5vpkAuu/Z1lfqy3yx9xe\nYXeTn9Cp99st9JvF4XgAVw==\n-----END PRIVATE KEY-----\n",
+    // client_id: "116714503231343675305",
+    // auth_uri: "https://accounts.google.com/o/oauth2/auth",
+    // token_uri: "https://oauth2.googleapis.com/token",
+    // auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+    // client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-6sihz%40el-rey-33b3b.iam.gserviceaccount.com",
+    // universe_domain: "googleapis.com"
+};
+const firebaseConfig = {
+    apiKey: "AIzaSyCg-gtV-iFQBOXlkMCXWjzWWz-_ycgOj18",
+    authDomain: "el-rey-33b3b.firebaseapp.com",
+    databaseURL: "https://el-rey-33b3b-default-rtdb.firebaseio.com",
+    projectId: "el-rey-33b3b",
+    storageBucket: "el-rey-33b3b.appspot.com",
+    messagingSenderId: "299953374596",
+    appId: "1:299953374596:web:1ae468eacd1f591182c9d1",
+    measurementId: "G-NMFQ612L8X",
 };
 firebase_admin_1.default.initializeApp({
     credential: firebase_admin_1.default.credential.cert(service_acount),
     databaseURL: "https://el-rey-33b3b-default-rtdb.firebaseio.com/",
-    storageBucket: "gs://el-rey-33b3b.appspot.com/",
+    storageBucket: "gs://el-rey-33b3b.appspot.com",
 });
 exports.storage_Ref = firebase_admin_1.default.storage().bucket();
+exports.storage_Ref1 = firebase_admin_1.default.storage();
+// Initialize Firebase
+const app1 = app_1.initializeApp(firebaseConfig);
+exports.storage1 = storage_1.getStorage(app1);

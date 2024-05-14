@@ -4,7 +4,7 @@ export default interface IZapatillaDB {
     idModelo: number;
     idImagen: number;
     idTalla: number;
-    precio: number;
+    precioCompra: number;
     precioSugerido: number;
     banVendido: boolean;
 }
