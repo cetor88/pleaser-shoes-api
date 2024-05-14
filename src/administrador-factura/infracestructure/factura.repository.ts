@@ -10,16 +10,14 @@ import IZapatillaDB from "src/administrador-modelo/domain/models/zapatilla.entit
 import { TemplateFileStream } from "../domain/models/TemplateFileStream";
 import { IFacturaRepository } from "../domain/repositories/FacturaInterface";
 import fs from 'fs';
- import { storage1, storage_Ref, storage_Ref1 } from "../../../src/controllers/resources/service.acount";
+import { storage_Ref } from "../../../src/controllers/resources/service.acount";
 import csv from "csv-parse";
 import request from "request";
 import { connection } from "../../conection";
 import { ResponseGeneric } from "../../../src/interfaces/ResponseGeneric";
 import { jsoModelos1114362 } from "../../../src/controllers/resources/facturas/1114362/1114362";
 import { ModeloFactura } from "../../../src/interfaces/TemplateFatura";
-
-import { getDownloadURL, getStorage, ref, uploadBytes, uploadBytesResumable, uploadString } from "firebase/storage";
-import { GetSignedUrlConfig, SaveOptions, UploadOptions } from "@google-cloud/storage";
+import { SaveOptions } from "@google-cloud/storage";
 
 export class FacturaResposiroryMsql implements IFacturaRepository {
 
@@ -139,7 +137,6 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
             urlImagen: imagen.imageFull,
             urlThumbnail: imagen.imageThumbnail
         };
-    
         const conn = await connection();
         const sql = 'INSERT INTO imagen SET ? ';
         return new Promise( async function(resolve, reject)  {
@@ -153,8 +150,6 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
                 conn.end();
                 reject(error);
             });
-    
-            
         });
     }
 

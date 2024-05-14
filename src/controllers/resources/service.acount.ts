@@ -1,5 +1,3 @@
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
 import admin, { ServiceAccount } from "firebase-admin";
 
 const service_acount: ServiceAccount = {
@@ -37,7 +35,3 @@ admin.initializeApp({
 export const storage_Ref = admin.storage().bucket();
 
 export const storage_Ref1 = admin.storage();
-
-// Initialize Firebase
-const app1 = initializeApp(firebaseConfig);
-export const storage1 = getStorage(app1);
