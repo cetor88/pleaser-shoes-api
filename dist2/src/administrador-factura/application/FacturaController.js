@@ -33,7 +33,7 @@ let FacturasController = class FacturasController extends tsoa_1.Controller {
     getFacturas() {
         return __awaiter(this, void 0, void 0, function* () {
             console.log("getFacturas");
-            this.facturaServices.cargaFactura();
+            return this.facturaServices.cargaFactura();
         });
     }
 };

@@ -38,55 +38,59 @@ class FacturaResposiroryMsql {
     }
     cargaFactura() {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.cargaCSV().then((modelosCsv) => __awaiter(this, void 0, void 0, function* () {
-                const jsonFactura = _1114362_1.jsoModelos1114362;
-                const fechaFactura = new Date(jsonFactura.fechaFactura);
-                // const fechaInventario = new Date();
-                jsonFactura.modelos.forEach((modeloTemplate) => __awaiter(this, void 0, void 0, function* () {
-                    let banEncontrado = false;
-                    modelosCsv.forEach((csvRow) => __awaiter(this, void 0, void 0, function* () {
-                        var e_1, _a;
-                        if (csvRow.modelo === modeloTemplate.modelo) {
-                            banEncontrado = true;
-                            csvRow.nombre = "PSW-" + new Date().getTime();
-                            csvRow.tallas = modeloTemplate.tallas;
-                            csvRow.id = 0;
-                            csvRow.modelo = csvRow.modelo.replace(new RegExp('/', 'g'), '_');
-                            yield this.saveImagenFb(csvRow);
-                            const tempFile = Object.assign({}, csvRow);
-                            //arrSalida.push(tempFile);
-                            const imagen = yield this.saveImagenDb(tempFile);
-                            const modelo = yield this.saveModeloDb(tempFile);
-                            try {
-                                for (var _b = __asyncValues(tempFile === null || tempFile === void 0 ? void 0 : tempFile.tallas), _c; _c = yield _b.next(), !_c.done;) {
-                                    const item = _c.value;
-                                    const zapatilla = {
-                                        idZapatilla: 0,
-                                        idModelo: modelo.idModelo,
-                                        idImagen: imagen.idImagen,
-                                        idTalla: Number(item),
-                                        precioCompra: Number(tempFile.precioCompra),
-                                        precioSugerido: Number(tempFile.precioSugerido),
-                                        banVendido: false
-                                    };
-                                    yield this.saveFacturaDb(zapatilla);
-                                }
-                            }
-                            catch (e_1_1) { e_1 = { error: e_1_1 }; }
-                            finally {
+            try {
+                yield this.cargaCSV().then((modelosCsv) => __awaiter(this, void 0, void 0, function* () {
+                    const jsonFactura = _1114362_1.jsoModelos1114362;
+                    const fechaFactura = new Date(jsonFactura.fechaFactura);
+                    // const fechaInventario = new Date();
+                    jsonFactura.modelos.forEach((modeloTemplate) => __awaiter(this, void 0, void 0, function* () {
+                        let banEncontrado = false;
+                        modelosCsv.forEach((csvRow) => __awaiter(this, void 0, void 0, function* () {
+                            var e_1, _a;
+                            if (csvRow.modelo === modeloTemplate.modelo) {
+                                banEncontrado = true;
+                                csvRow.nombre = "PSW-" + new Date().getTime();
+                                csvRow.tallas = modeloTemplate.tallas;
+                                csvRow.id = 0;
+                                csvRow.modelo = csvRow.modelo.replace(new RegExp('/', 'g'), '*');
+                                yield this.saveImagenFb(csvRow);
+                                const tempFile = Object.assign({}, csvRow);
+                                //arrSalida.push(tempFile);
+                                const imagen = yield this.saveImagenDb(tempFile);
+                                const modelo = yield this.saveModeloDb(tempFile);
                                 try {
-                                    if (_c && !_c.done && (_a = _b.return)) yield _a.call(_b);
+                                    for (var _b = __asyncValues(tempFile === null || tempFile === void 0 ? void 0 : tempFile.tallas), _c; _c = yield _b.next(), !_c.done;) {
+                                        const item = _c.value;
+                                        const zapatilla = {
+                                            idZapatilla: 0,
+                                            idModelo: modelo.idModelo,
+                                            idImagen: imagen.idImagen,
+                                            idTalla: Number(item),
+                                            precioCompra: Number(tempFile.precioCompra),
+                                            precioSugerido: Number(tempFile.precioSugerido),
+                                            banVendido: false
+                                        };
+                                    }
                                 }
-                                finally { if (e_1) throw e_1.error; }
+                                catch (e_1_1) { e_1 = { error: e_1_1 }; }
+                                finally {
+                                    try {
+                                        if (_c && !_c.done && (_a = _b.return)) yield _a.call(_b);
+                                    }
+                                    finally { if (e_1) throw e_1.error; }
+                                }
                             }
+                        }));
+                        if (!banEncontrado) {
+                            console.log('Modelo no encontrado: ', modeloTemplate.modelo);
                         }
                     }));
-                    if (!banEncontrado) {
-                        console.log('Modelo no encontrado: ', modeloTemplate.modelo);
-                    }
                 }));
-            }));
-            return new ResponseGeneric_1.ResponseGeneric(null, 0, "Factura procesada");
+                return new ResponseGeneric_1.ResponseGeneric(null, 0, "Factura procesada");
+            }
+            catch (error) {
+            }
+            return new ResponseGeneric_1.ResponseGeneric(null, -1, "Error al procesar la factura");
         });
     }
     cargaCSV() {

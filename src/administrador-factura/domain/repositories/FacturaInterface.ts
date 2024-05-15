@@ -1,7 +1,7 @@
 import IImagenDB from "src/administrador-modelo/domain/models/imagen.entity";
 import { IInventarioDB } from "src/administrador-modelo/domain/models/inventario.entity";
 import IModeloDB from "src/administrador-modelo/domain/models/modelo.entity";
-import IZapatillaDB from "src/administrador-modelo/domain/models/zapatilla.entity";
+import IZapatillaDB from "src/administrador-zapatilla/domain/models/zapatilla.entity";
 import { ResponseGeneric } from "src/interfaces/ResponseGeneric";
 
 import { TemplateFileStream } from "../models/TemplateFileStream";

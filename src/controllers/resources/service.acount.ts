@@ -33,5 +33,3 @@ admin.initializeApp({
 });
 
 export const storage_Ref = admin.storage().bucket();
-
-export const storage_Ref1 = admin.storage();

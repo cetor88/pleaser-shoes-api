@@ -6,7 +6,7 @@
 import IImagenDB from "src/administrador-modelo/domain/models/imagen.entity";
 import { IInventarioDB } from "src/administrador-modelo/domain/models/inventario.entity";
 import IModeloDB from "src/administrador-modelo/domain/models/modelo.entity";
-import IZapatillaDB from "src/administrador-modelo/domain/models/zapatilla.entity";
+import IZapatillaDB from "src/administrador-zapatilla/domain/models/zapatilla.entity";
 import { TemplateFileStream } from "../domain/models/TemplateFileStream";
 import { IFacturaRepository } from "../domain/repositories/FacturaInterface";
 import fs from 'fs';
@@ -24,60 +24,63 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
     urlCSV: string = 'inv_item.csv';
 
     async cargaFactura(): Promise<ResponseGeneric> {
-        await this.cargaCSV().then(  async (  modelosCsv: TemplateFileStream[] ) => {
-
-            const jsonFactura = jsoModelos1114362;
-            const fechaFactura = new Date(jsonFactura.fechaFactura);
-            // const fechaInventario = new Date();
-            jsonFactura.modelos.forEach( async (modeloTemplate: ModeloFactura) =>{
-                let banEncontrado = false;
-                modelosCsv.forEach( async ( csvRow: TemplateFileStream )=>{
-                        if ( csvRow.modelo === modeloTemplate.modelo){
-                            banEncontrado=true;
-                            csvRow.nombre = "PSW-"+ new Date().getTime();
-                            csvRow.tallas = modeloTemplate.tallas;
-                            csvRow.id = 0;
-                            csvRow.modelo = csvRow.modelo.replace( new RegExp('/', 'g' ),'_');
-                            await this.saveImagenFb(csvRow);
-                            const tempFile: TemplateFileStream = {...csvRow};
-                            //arrSalida.push(tempFile);
-                            const imagen: IImagenDB   = await this.saveImagenDb(tempFile);
-                            const modelo: IModeloDB   = await this.saveModeloDb(tempFile);
-                            for await (const item of tempFile?.tallas) {
-                                const zapatilla: IZapatillaDB  = {
-                                    idZapatilla: 0,
-                                    idModelo: modelo.idModelo,
-                                    idImagen: imagen.idImagen,
-                                    idTalla: Number(item),
-                                    precioCompra: Number(tempFile.precioCompra),
-                                    precioSugerido: Number(tempFile.precioSugerido),
-                                    banVendido: false
-                                };
-                                await this.saveFacturaDb(zapatilla);
-                                //const itemFactura: Factura = await saveFacturaDb(factura);
-                                /*const inventario: Inventario = {
-                                    idInventario: 0,
-                                    idModelo: modelo.idModelo,
-                                    idImagen: imagen.idImagen,
-                                    idFactura: itemFactura.idFactura,
-                                    talla: Number(item),
-                                    precioCompra: Number(tempFile.precioCompra),
-                                    precioSugerido: Number(tempFile.precioSugerido),
-                                    precioVenta: Number(tempFile.precioSugerido) * 23,
-                                    ajustePrecio: 100,
-                                    estaVendida: 0,
-                                    fechaInventario: fechaInventario
+        try {
+            await this.cargaCSV().then(  async (  modelosCsv: TemplateFileStream[] ) => {
+                const jsonFactura = jsoModelos1114362;
+                const fechaFactura = new Date(jsonFactura.fechaFactura);
+                // const fechaInventario = new Date();
+                jsonFactura.modelos.forEach( async (modeloTemplate: ModeloFactura) =>{
+                    let banEncontrado = false;
+                    modelosCsv.forEach( async ( csvRow: TemplateFileStream )=>{
+                            if ( csvRow.modelo === modeloTemplate.modelo){
+                                banEncontrado=true;
+                                csvRow.nombre = "PSW-"+ new Date().getTime();
+                                csvRow.tallas = modeloTemplate.tallas;
+                                csvRow.id = 0;
+                                csvRow.modelo = csvRow.modelo.replace( new RegExp('/', 'g' ),'*');
+                                await this.saveImagenFb(csvRow);
+                                const tempFile: TemplateFileStream = {...csvRow};
+                                //arrSalida.push(tempFile);
+                                const imagen: IImagenDB   = await this.saveImagenDb(tempFile);
+                                const modelo: IModeloDB   = await this.saveModeloDb(tempFile);
+                                for await (const item of tempFile?.tallas) {
+                                    const zapatilla: IZapatillaDB  = {
+                                        idZapatilla: 0,
+                                        idModelo: modelo.idModelo,
+                                        idImagen: imagen.idImagen,
+                                        idTalla: Number(item),
+                                        precioCompra: Number(tempFile.precioCompra),
+                                        precioSugerido: Number(tempFile.precioSugerido),
+                                        banVendido: false
+                                    };
+                                    //await this.saveFacturaDb(zapatilla);
+                                    //const itemFactura: Factura = await saveFacturaDb(factura);
+                                    /*const inventario: Inventario = {
+                                        idInventario: 0,
+                                        idModelo: modelo.idModelo,
+                                        idImagen: imagen.idImagen,
+                                        idFactura: itemFactura.idFactura,
+                                        talla: Number(item),
+                                        precioCompra: Number(tempFile.precioCompra),
+                                        precioSugerido: Number(tempFile.precioSugerido),
+                                        precioVenta: Number(tempFile.precioSugerido) * 23,
+                                        ajustePrecio: 100,
+                                        estaVendida: 0,
+                                        fechaInventario: fechaInventario
+                                    }
+                                    await saveInventarioDb(inventario);*/
                                 }
-                                await saveInventarioDb(inventario);*/
                             }
+                        });
+                        if(!banEncontrado){
+                            console.log('Modelo no encontrado: ', modeloTemplate.modelo);
                         }
-                    });
-                    if(!banEncontrado){
-                        console.log('Modelo no encontrado: ', modeloTemplate.modelo);
-                    }
+                });
             });
-        });
-        return new ResponseGeneric(null, 0, "Factura procesada");
+            return new ResponseGeneric(null, 0, "Factura procesada");
+        } catch (error) {
+            return new ResponseGeneric(null, -1, "Error al procesar la factura");
+        }
     }
 
 

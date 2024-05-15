@@ -1,5 +1,6 @@
 import { Controller, Put, Route } from "tsoa";
 
+import { ResponseGeneric } from "../../../src/interfaces/ResponseGeneric";
 import { FacturaServices } from "../domain/services/factura.service";
 
 @Route("facturas")
@@ -11,8 +12,8 @@ export class FacturasController extends Controller {
     this.facturaServices = new FacturaServices();
   }*/
   @Put()
-  async getFacturas(): Promise<void> {
+  async getFacturas(): Promise<ResponseGeneric> {
     console.log("getFacturas");
-    this.facturaServices.cargaFactura();
+    return this.facturaServices.cargaFactura();
   }
 }

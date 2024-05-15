@@ -3,9 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.storage1 = exports.storage_Ref1 = exports.storage_Ref = void 0;
-const app_1 = require("firebase/app");
-const storage_1 = require("firebase/storage");
+exports.storage_Ref = void 0;
 const firebase_admin_1 = __importDefault(require("firebase-admin"));
 const service_acount = {
     //type: "service_account",
@@ -36,7 +34,3 @@ firebase_admin_1.default.initializeApp({
     storageBucket: "gs://el-rey-33b3b.appspot.com",
 });
 exports.storage_Ref = firebase_admin_1.default.storage().bucket();
-exports.storage_Ref1 = firebase_admin_1.default.storage();
-// Initialize Firebase
-const app1 = app_1.initializeApp(firebaseConfig);
-exports.storage1 = storage_1.getStorage(app1);
