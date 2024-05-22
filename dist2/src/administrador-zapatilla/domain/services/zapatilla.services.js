@@ -32,7 +32,7 @@ class ZapatillaServices {
     }
     updateZapatilla(zapatilla) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield this.zapatillaResposiroryMsql.saveZapatillaDb(zapatilla);
+            return yield this.zapatillaResposiroryMsql.updateZapatillaByModelo(zapatilla);
         });
     }
 }

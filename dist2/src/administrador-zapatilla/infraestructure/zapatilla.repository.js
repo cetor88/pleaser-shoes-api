@@ -45,11 +45,11 @@ class ZapatillaRepositoryMySql {
     updateZapatillaByModelo(zapa) {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield conection_1.connection();
-            const sql2 = `Update zapatilla SET idModelo=${zapa.idModelo},
+            const sql2 = `Update zapatilla SET idModelo="${zapa.idModelo}",
     idImagen=${zapa.idImagen}, idTalla=${zapa.idTalla},
-    idFactura=${zapa.idFactura}, disponibilidad=${zapa.disponibilidad},
-    precioCompra=${zapa.precioCompra}, precioCompra${zapa.precioCompra},
-    precioSugerido=${zapa.precioSugerido}, precioVenta=${zapa.precioVenta},
+    idFactura="${zapa.idFactura}", disponibilidad=${zapa.disponibilidad},
+    precioCompra=${zapa.precioCompra},precioSugerido=${zapa.precioSugerido},
+    precioVenta=${zapa.precioVenta},
     banVendido=${zapa.banVendido} where idZapatilla = ${zapa.idZapatilla}`;
             return new Promise(function (resolve, reject) {
                 conn.execute(sql2).then((data) => {

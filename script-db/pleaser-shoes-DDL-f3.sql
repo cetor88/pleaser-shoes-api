@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`zapatilla` (
   `precioCompra` DOUBLE NULL,
   `precioSugerido` DOUBLE NULL,
   `precioVenta` DOUBLE NULL,
-  `banVendido` BIT(2) NULL,
+  `banVendido` BIT(1) NULL,
   PRIMARY KEY (`idZapatilla`),
   CONSTRAINT `fk_id_modelo`
     FOREIGN KEY (`idModelo`)

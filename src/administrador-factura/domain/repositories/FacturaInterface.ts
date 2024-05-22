@@ -1,6 +1,5 @@
 import IImagenDB from "src/administrador-modelo/domain/models/imagen.entity";
 import IModeloDB from "src/administrador-modelo/domain/models/modelo.entity";
-import { ResponseGeneric } from "src/interfaces/ResponseGeneric";
 
 import { IFacturaDb } from "../models/factura.repository";
 import { TemplateFileStream } from "../models/TemplateFileStream";

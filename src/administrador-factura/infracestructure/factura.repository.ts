@@ -5,7 +5,6 @@
 
 import IImagenDB from "src/administrador-modelo/domain/models/imagen.entity";
 import IModeloDB from "src/administrador-modelo/domain/models/modelo.entity";
-import IZapatillaDB from "src/administrador-zapatilla/domain/models/zapatilla.entity";
 import { TemplateFileStream } from "../domain/models/TemplateFileStream";
 import { IFacturaRepository } from "../domain/repositories/FacturaInterface";
 import fs from 'fs';

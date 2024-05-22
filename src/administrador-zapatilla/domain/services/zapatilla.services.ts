@@ -19,6 +19,8 @@ export class ZapatillaServices {
   }
 
   public async updateZapatilla(zapatilla: IZapatillaDB): Promise<IZapatillaDB> {
-    return await this.zapatillaResposiroryMsql.saveZapatillaDb(zapatilla);
+    return await this.zapatillaResposiroryMsql.updateZapatillaByModelo(
+      zapatilla
+    );
   }
 }

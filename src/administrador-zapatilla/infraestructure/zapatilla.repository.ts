@@ -33,11 +33,11 @@ export class ZapatillaRepositoryMySql implements IZapatillaRepository {
 
   async updateZapatillaByModelo(zapa: IZapatillaDB): Promise<IZapatillaDB> {
     const conn = await connection();
-    const sql2 = `Update zapatilla SET idModelo=${zapa.idModelo},
+    const sql2 = `Update zapatilla SET idModelo="${zapa.idModelo}",
     idImagen=${zapa.idImagen}, idTalla=${zapa.idTalla},
-    idFactura=${zapa.idFactura}, disponibilidad=${zapa.disponibilidad},
-    precioCompra=${zapa.precioCompra}, precioCompra${zapa.precioCompra},
-    precioSugerido=${zapa.precioSugerido}, precioVenta=${zapa.precioVenta},
+    idFactura="${zapa.idFactura}", disponibilidad=${zapa.disponibilidad},
+    precioCompra=${zapa.precioCompra},precioSugerido=${zapa.precioSugerido},
+    precioVenta=${zapa.precioVenta},
     banVendido=${zapa.banVendido} where idZapatilla = ${zapa.idZapatilla}`;
 
     return new Promise(function (resolve, reject) {
