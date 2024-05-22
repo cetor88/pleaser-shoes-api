@@ -15,11 +15,27 @@ const ModeloController_1 = require("./../src/administrador-modelo/application/Mo
 const FacturaController_1 = require("./../src/administrador-factura/application/FacturaController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const models = {
+    "IZapatillaDB": {
+        "dataType": "refObject",
+        "properties": {
+            "idZapatilla": { "dataType": "double", "required": true },
+            "idImagen": { "dataType": "double", "required": true },
+            "idModelo": { "dataType": "string", "required": true },
+            "idTalla": { "dataType": "double", "required": true },
+            "idFactura": { "dataType": "double", "required": true },
+            "precioCompra": { "dataType": "double", "required": true },
+            "precioSugerido": { "dataType": "double", "required": true },
+            "precioVenta": { "dataType": "double", "required": true },
+            "disponibilidad": { "dataType": "double", "required": true },
+            "banVendido": { "dataType": "boolean", "required": true },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "IModeloDB": {
         "dataType": "refObject",
         "properties": {
-            "idModelo": { "dataType": "double", "required": true },
-            "modelo": { "dataType": "string", "required": true },
+            "idModelo": { "dataType": "string", "required": true },
             "descripcion": { "dataType": "string", "required": true },
         },
         "additionalProperties": false,
@@ -75,6 +91,75 @@ function RegisterRoutes(app) {
             const controller = new ZapatillaController_1.ZapatillaController();
             templateService.apiHandler({
                 methodName: 'getZapatillas',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+            });
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.get('/zapatillas/:modelo', ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController)), ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController.prototype.getZapatillasByModel)), function ZapatillaController_getZapatillasByModel(request, response, next) {
+        const args = {
+            modelo: { "in": "path", "name": "modelo", "required": true, "dataType": "string" },
+        };
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = templateService.getValidatedArgs({ args, request, response });
+            const controller = new ZapatillaController_1.ZapatillaController();
+            templateService.apiHandler({
+                methodName: 'getZapatillasByModel',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+            });
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/zapatillas', ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController)), ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController.prototype.saveZapatillas)), function ZapatillaController_saveZapatillas(request, response, next) {
+        const args = {
+            zapatilla: { "in": "body", "name": "zapatilla", "required": true, "ref": "IZapatillaDB" },
+        };
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = templateService.getValidatedArgs({ args, request, response });
+            const controller = new ZapatillaController_1.ZapatillaController();
+            templateService.apiHandler({
+                methodName: 'saveZapatillas',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+            });
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.put('/zapatillas', ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController)), ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController.prototype.updateZapatillas)), function ZapatillaController_updateZapatillas(request, response, next) {
+        const args = {
+            zapatilla: { "in": "body", "name": "zapatilla", "required": true, "ref": "IZapatillaDB" },
+        };
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = templateService.getValidatedArgs({ args, request, response });
+            const controller = new ZapatillaController_1.ZapatillaController();
+            templateService.apiHandler({
+                methodName: 'updateZapatillas',
                 controller,
                 response,
                 next,

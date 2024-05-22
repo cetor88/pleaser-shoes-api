@@ -12,5 +12,4 @@ export interface IModeloRepository {
   addModelo(modelo: any): Promise<any>;
 
   deleteModelo(idModelo: number): Promise<any>;
-
 }

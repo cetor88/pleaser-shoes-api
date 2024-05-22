@@ -7,13 +7,65 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"IModeloDB": {
+			"IZapatillaDB": {
 				"properties": {
-					"idModelo": {
+					"idZapatilla": {
 						"type": "number",
 						"format": "double"
 					},
-					"modelo": {
+					"idImagen": {
+						"type": "number",
+						"format": "double"
+					},
+					"idModelo": {
+						"type": "string"
+					},
+					"idTalla": {
+						"type": "number",
+						"format": "double"
+					},
+					"idFactura": {
+						"type": "number",
+						"format": "double"
+					},
+					"precioCompra": {
+						"type": "number",
+						"format": "double"
+					},
+					"precioSugerido": {
+						"type": "number",
+						"format": "double"
+					},
+					"precioVenta": {
+						"type": "number",
+						"format": "double"
+					},
+					"disponibilidad": {
+						"type": "number",
+						"format": "double"
+					},
+					"banVendido": {
+						"type": "boolean"
+					}
+				},
+				"required": [
+					"idZapatilla",
+					"idImagen",
+					"idModelo",
+					"idTalla",
+					"idFactura",
+					"precioCompra",
+					"precioSugerido",
+					"precioVenta",
+					"disponibilidad",
+					"banVendido"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"IModeloDB": {
+				"properties": {
+					"idModelo": {
 						"type": "string"
 					},
 					"descripcion": {
@@ -22,7 +74,6 @@
 				},
 				"required": [
 					"idModelo",
-					"modelo",
 					"descripcion"
 				],
 				"type": "object",
@@ -88,12 +139,104 @@
 			"get": {
 				"operationId": "GetZapatillas",
 				"responses": {
-					"204": {
-						"description": "No content"
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"items": {
+										"$ref": "#/components/schemas/IZapatillaDB"
+									},
+									"type": "array"
+								}
+							}
+						}
 					}
 				},
 				"security": [],
 				"parameters": []
+			},
+			"post": {
+				"operationId": "SaveZapatillas",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IZapatillaDB"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IZapatillaDB"
+							}
+						}
+					}
+				}
+			},
+			"put": {
+				"operationId": "UpdateZapatillas",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IZapatillaDB"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/IZapatillaDB"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/zapatillas/{modelo}": {
+			"get": {
+				"operationId": "GetZapatillasByModel",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/IZapatillaDB"
+								}
+							}
+						}
+					}
+				},
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "modelo",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/modelos": {

@@ -12,13 +12,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __asyncValues = (this && this.__asyncValues) || function (o) {
-    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
-    var m = o[Symbol.asyncIterator], i;
-    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
-    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
-    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -30,68 +23,9 @@ const service_acount_1 = require("../../../src/controllers/resources/service.aco
 const csv_parse_1 = __importDefault(require("csv-parse"));
 const request_1 = __importDefault(require("request"));
 const conection_1 = require("../../conection");
-const ResponseGeneric_1 = require("../../../src/interfaces/ResponseGeneric");
-const _1114362_1 = require("../../../src/controllers/resources/facturas/1114362/1114362");
 class FacturaResposiroryMsql {
     constructor() {
         this.urlCSV = 'inv_item.csv';
-    }
-    cargaFactura() {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                yield this.cargaCSV().then((modelosCsv) => __awaiter(this, void 0, void 0, function* () {
-                    const jsonFactura = _1114362_1.jsoModelos1114362;
-                    const fechaFactura = new Date(jsonFactura.fechaFactura);
-                    // const fechaInventario = new Date();
-                    jsonFactura.modelos.forEach((modeloTemplate) => __awaiter(this, void 0, void 0, function* () {
-                        let banEncontrado = false;
-                        modelosCsv.forEach((csvRow) => __awaiter(this, void 0, void 0, function* () {
-                            var e_1, _a;
-                            if (csvRow.modelo === modeloTemplate.modelo) {
-                                banEncontrado = true;
-                                csvRow.nombre = "PSW-" + new Date().getTime();
-                                csvRow.tallas = modeloTemplate.tallas;
-                                csvRow.id = 0;
-                                csvRow.modelo = csvRow.modelo.replace(new RegExp('/', 'g'), '*');
-                                yield this.saveImagenFb(csvRow);
-                                const tempFile = Object.assign({}, csvRow);
-                                //arrSalida.push(tempFile);
-                                const imagen = yield this.saveImagenDb(tempFile);
-                                const modelo = yield this.saveModeloDb(tempFile);
-                                try {
-                                    for (var _b = __asyncValues(tempFile === null || tempFile === void 0 ? void 0 : tempFile.tallas), _c; _c = yield _b.next(), !_c.done;) {
-                                        const item = _c.value;
-                                        const zapatilla = {
-                                            idZapatilla: 0,
-                                            idModelo: modelo.idModelo,
-                                            idImagen: imagen.idImagen,
-                                            idTalla: Number(item),
-                                            precioCompra: Number(tempFile.precioCompra),
-                                            precioSugerido: Number(tempFile.precioSugerido),
-                                            banVendido: false
-                                        };
-                                    }
-                                }
-                                catch (e_1_1) { e_1 = { error: e_1_1 }; }
-                                finally {
-                                    try {
-                                        if (_c && !_c.done && (_a = _b.return)) yield _a.call(_b);
-                                    }
-                                    finally { if (e_1) throw e_1.error; }
-                                }
-                            }
-                        }));
-                        if (!banEncontrado) {
-                            console.log('Modelo no encontrado: ', modeloTemplate.modelo);
-                        }
-                    }));
-                }));
-                return new ResponseGeneric_1.ResponseGeneric(null, 0, "Factura procesada");
-            }
-            catch (error) {
-            }
-            return new ResponseGeneric_1.ResponseGeneric(null, -1, "Error al procesar la factura");
-        });
     }
     cargaCSV() {
         return __awaiter(this, void 0, void 0, function* () {
@@ -119,14 +53,13 @@ class FacturaResposiroryMsql {
     saveImagenFb(modeloCSV) {
         return __awaiter(this, void 0, void 0, function* () {
             const requestSettings = {
-                url: modeloCSV.imageThumbnail,
+                url: modeloCSV.imageFull,
                 method: 'GET',
                 encoding: null
             };
             return request_1.default(requestSettings, function (error, response, body) {
                 return __awaiter(this, void 0, void 0, function* () {
                     if (!error && response.statusCode == 200) {
-                        //                    const imagebuffer: Buffer = new Buffer(body);
                         const options = {
                             metadata: {
                                 contentType: 'image/jpeg',
@@ -174,8 +107,7 @@ class FacturaResposiroryMsql {
         return __awaiter(this, void 0, void 0, function* () {
             const conn = yield conection_1.connection();
             const modelo = {
-                idModelo: 0,
-                modelo: item.modelo,
+                idModelo: item.modelo,
                 descripcion: item.descripcion
             };
             const sql = 'INSERT INTO modelo SET ? ';
@@ -183,7 +115,6 @@ class FacturaResposiroryMsql {
                 return __awaiter(this, void 0, void 0, function* () {
                     yield conn.query(sql, modelo)
                         .then((row1) => {
-                        modelo.idModelo = row1[0].insertId;
                         console.log('Modelo insertada');
                         conn.end();
                         resolve(modelo);
@@ -195,37 +126,17 @@ class FacturaResposiroryMsql {
             });
         });
     }
-    saveFacturaDb(zapatilla) {
+    saveFacturaDb(factura) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log('Factura: ', factura);
             const conn = yield conection_1.connection();
-            const sql2 = 'INSERT INTO zapatilla SET ?';
+            const sql2 = 'INSERT INTO factura SET ?';
             return new Promise(function (resolve, reject) {
                 return __awaiter(this, void 0, void 0, function* () {
-                    yield conn.query(sql2, zapatilla).then((data) => {
+                    yield conn.query(sql2, factura).then((data) => {
                         console.log('Factura insertada');
-                        zapatilla.idZapatilla = data[0].insertId;
                         conn.end();
-                        resolve(zapatilla);
-                    }, (error) => {
-                        console.log("erro", error);
-                        conn.end();
-                        reject(error);
-                    });
-                });
-            });
-        });
-    }
-    saveInventarioDb(inventario) {
-        return __awaiter(this, void 0, void 0, function* () {
-            const conn = yield conection_1.connection();
-            const sql2 = 'INSERT INTO inventario SET ?';
-            return new Promise(function (resolve, reject) {
-                return __awaiter(this, void 0, void 0, function* () {
-                    yield conn.query(sql2, inventario).then((data) => {
-                        console.log('Inventario insertada');
-                        inventario.idInventario = data[0].insertId;
-                        conn.end();
-                        resolve(inventario);
+                        resolve(factura);
                     }, (error) => {
                         console.log("erro", error);
                         conn.end();

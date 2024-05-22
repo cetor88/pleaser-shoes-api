@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.jsoModelos1114362 = void 0;
 exports.jsoModelos1114362 = {
-    fechaFactura: '25/10/2021',
+    fechaFactura: "2021-10-25",
     noFactura: "1114362",
     modelos: [
         {

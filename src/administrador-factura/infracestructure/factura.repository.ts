@@ -4,7 +4,6 @@
 /* eslint-disable simple-import-sort/imports */
 
 import IImagenDB from "src/administrador-modelo/domain/models/imagen.entity";
-import { IInventarioDB } from "src/administrador-modelo/domain/models/inventario.entity";
 import IModeloDB from "src/administrador-modelo/domain/models/modelo.entity";
 import IZapatillaDB from "src/administrador-zapatilla/domain/models/zapatilla.entity";
 import { TemplateFileStream } from "../domain/models/TemplateFileStream";
@@ -14,75 +13,12 @@ import { storage_Ref } from "../../../src/controllers/resources/service.acount";
 import csv from "csv-parse";
 import request from "request";
 import { connection } from "../../conection";
-import { ResponseGeneric } from "../../../src/interfaces/ResponseGeneric";
-import { jsoModelos1114362 } from "../../../src/controllers/resources/facturas/1114362/1114362";
-import { ModeloFactura } from "../../../src/interfaces/TemplateFatura";
 import { SaveOptions } from "@google-cloud/storage";
+import { IFacturaDb } from "../domain/models/factura.repository";
 
 export class FacturaResposiroryMsql implements IFacturaRepository {
 
     urlCSV: string = 'inv_item.csv';
-
-    async cargaFactura(): Promise<ResponseGeneric> {
-        try {
-            await this.cargaCSV().then(  async (  modelosCsv: TemplateFileStream[] ) => {
-                const jsonFactura = jsoModelos1114362;
-                const fechaFactura = new Date(jsonFactura.fechaFactura);
-                // const fechaInventario = new Date();
-                jsonFactura.modelos.forEach( async (modeloTemplate: ModeloFactura) =>{
-                    let banEncontrado = false;
-                    modelosCsv.forEach( async ( csvRow: TemplateFileStream )=>{
-                            if ( csvRow.modelo === modeloTemplate.modelo){
-                                banEncontrado=true;
-                                csvRow.nombre = "PSW-"+ new Date().getTime();
-                                csvRow.tallas = modeloTemplate.tallas;
-                                csvRow.id = 0;
-                                csvRow.modelo = csvRow.modelo.replace( new RegExp('/', 'g' ),'*');
-                                await this.saveImagenFb(csvRow);
-                                const tempFile: TemplateFileStream = {...csvRow};
-                                //arrSalida.push(tempFile);
-                                const imagen: IImagenDB   = await this.saveImagenDb(tempFile);
-                                const modelo: IModeloDB   = await this.saveModeloDb(tempFile);
-                                for await (const item of tempFile?.tallas) {
-                                    const zapatilla: IZapatillaDB  = {
-                                        idZapatilla: 0,
-                                        idModelo: modelo.idModelo,
-                                        idImagen: imagen.idImagen,
-                                        idTalla: Number(item),
-                                        precioCompra: Number(tempFile.precioCompra),
-                                        precioSugerido: Number(tempFile.precioSugerido),
-                                        banVendido: false
-                                    };
-                                    //await this.saveFacturaDb(zapatilla);
-                                    //const itemFactura: Factura = await saveFacturaDb(factura);
-                                    /*const inventario: Inventario = {
-                                        idInventario: 0,
-                                        idModelo: modelo.idModelo,
-                                        idImagen: imagen.idImagen,
-                                        idFactura: itemFactura.idFactura,
-                                        talla: Number(item),
-                                        precioCompra: Number(tempFile.precioCompra),
-                                        precioSugerido: Number(tempFile.precioSugerido),
-                                        precioVenta: Number(tempFile.precioSugerido) * 23,
-                                        ajustePrecio: 100,
-                                        estaVendida: 0,
-                                        fechaInventario: fechaInventario
-                                    }
-                                    await saveInventarioDb(inventario);*/
-                                }
-                            }
-                        });
-                        if(!banEncontrado){
-                            console.log('Modelo no encontrado: ', modeloTemplate.modelo);
-                        }
-                });
-            });
-            return new ResponseGeneric(null, 0, "Factura procesada");
-        } catch (error) {
-            return new ResponseGeneric(null, -1, "Error al procesar la factura");
-        }
-    }
-
 
     async cargaCSV(): Promise<TemplateFileStream[]> {
         return new Promise((resolve,reject)=>{
@@ -107,7 +43,7 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
 
     async saveImagenFb(modeloCSV: TemplateFileStream): Promise<any> {
         const requestSettings = {
-            url: modeloCSV.imageThumbnail,
+            url: modeloCSV.imageFull,
             method: 'GET',
             encoding: null
         };
@@ -115,7 +51,6 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
             requestSettings,
             async  function (error, response, body): Promise<void> {
                 if (!error && response.statusCode == 200) {
-//                    const imagebuffer: Buffer = new Buffer(body);
                     const options: SaveOptions = {
                         metadata: {
                             contentType: 'image/jpeg',
@@ -159,15 +94,13 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
     async saveModeloDb(item: TemplateFileStream): Promise<IModeloDB> {
         const conn = await connection();
         const modelo: IModeloDB  = {
-            idModelo: 0,
-            modelo: item.modelo,
+            idModelo: item.modelo,
             descripcion: item.descripcion
         };
         const sql = 'INSERT INTO modelo SET ? ';
         return new Promise( async function(resolve, reject)  {
             await conn.query(sql, modelo)
             .then((row1: any)=>{
-                modelo.idModelo = row1[0].insertId;
                 console.log('Modelo insertada');
                 conn.end();
                 resolve (modelo);
@@ -178,15 +111,16 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
         });
     }
 
-    async saveFacturaDb(zapatilla: IZapatillaDB): Promise<IZapatillaDB> {
+    async saveFacturaDb(factura: IFacturaDb): Promise<IFacturaDb> {
+        console.log('Factura: ', factura);
         const conn = await connection();
-        const sql2 = 'INSERT INTO zapatilla SET ?';
+        const sql2 = 'INSERT INTO factura SET ?';
         return new Promise( async function(resolve, reject) {
-            await conn.query(sql2, zapatilla ).then((data: any) => {
+
+            await conn.query(sql2, factura ).then((data) => {
                 console.log('Factura insertada');
-                zapatilla.idZapatilla = data[0].insertId;
                 conn.end();
-                resolve(zapatilla);
+                resolve(factura);
             }, (error) => {
                 console.log("erro", error);
                 conn.end();
@@ -194,22 +128,4 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
             });
         });
     }
-
-    async saveInventarioDb(inventario: IInventarioDB): Promise<IInventarioDB> {
-        const conn = await connection();
-        const sql2 = 'INSERT INTO inventario SET ?';
-        return new Promise( async function(resolve, reject) {
-            await conn.query(sql2, inventario ).then((data: any) => {
-                console.log('Inventario insertada');
-                inventario.idInventario = data[0].insertId;
-                conn.end();
-                resolve(inventario);
-            }, (error) => {
-                console.log("erro", error);
-                conn.end();
-                reject(error);
-            });
-        });
-    }
-
 }

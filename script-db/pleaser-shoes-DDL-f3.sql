@@ -26,20 +26,10 @@ DROP TABLE IF EXISTS `pleaser-shoes`.`factura` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`factura` (
-  `idFactura` INT NOT NULL AUTO_INCREMENT,
-  `noFactura` VARCHAR(45) NULL,
-  `fechaCompra` DATETIME NULL,
-  `idZapatilla` INT NULL,
-  PRIMARY KEY (`idFactura`),
-  CONSTRAINT `fk_factura_zapatilla`
-    FOREIGN KEY (`idZapatilla`)
-    REFERENCES `pleaser-shoes`.`zapatilla` (`idZapatilla`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+  `idFactura` INT NOT NULL,
+  `fechaCompra` TIMESTAMP NULL,
+  PRIMARY KEY (`idFactura`))
 ENGINE = InnoDB;
-
-SHOW WARNINGS;
-CREATE INDEX `fk_factura_zapatilla_idx` ON `pleaser-shoes`.`factura` (`idZapatilla` ASC) VISIBLE;
 
 SHOW WARNINGS;
 
@@ -65,8 +55,7 @@ DROP TABLE IF EXISTS `pleaser-shoes`.`modelo` ;
 
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`modelo` (
-  `idModelo` INT NOT NULL AUTO_INCREMENT,
-  `modelo` VARCHAR(45) NULL,
+  `idModelo` VARCHAR(50) NOT NULL,
   `descripcion` VARCHAR(200) NULL,
   PRIMARY KEY (`idModelo`))
 ENGINE = InnoDB;
@@ -82,7 +71,7 @@ SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`talla` (
   `idTalla` INT NOT NULL AUTO_INCREMENT,
   `nacional` INT NULL,
-  `amaricano` INT NULL,
+  `americano` INT NULL,
   PRIMARY KEY (`idTalla`))
 ENGINE = InnoDB;
 
@@ -96,11 +85,14 @@ DROP TABLE IF EXISTS `pleaser-shoes`.`zapatilla` ;
 SHOW WARNINGS;
 CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`zapatilla` (
   `idZapatilla` INT NOT NULL AUTO_INCREMENT,
-  `idModelo` INT NULL,
+  `idModelo`  VARCHAR(50) NULL,
   `idImagen` INT NULL,
   `idTalla` INT NULL,
+  `idFactura` INT NULL ,
+  `disponibilidad` INT NULL,
   `precioCompra` DOUBLE NULL,
   `precioSugerido` DOUBLE NULL,
+  `precioVenta` DOUBLE NULL,
   `banVendido` BIT(2) NULL,
   PRIMARY KEY (`idZapatilla`),
   CONSTRAINT `fk_id_modelo`
@@ -117,6 +109,11 @@ CREATE TABLE IF NOT EXISTS `pleaser-shoes`.`zapatilla` (
     FOREIGN KEY (`idTalla`)
     REFERENCES `pleaser-shoes`.`talla` (`idTalla`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_id_factura`
+    FOREIGN KEY (`idFactura`)
+    REFERENCES `pleaser-shoes`.`factura` (`idFactura`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
@@ -130,7 +127,19 @@ SHOW WARNINGS;
 CREATE INDEX `fk_id_talla_idx` ON `pleaser-shoes`.`zapatilla` (`idTalla` ASC) VISIBLE;
 
 SHOW WARNINGS;
+CREATE INDEX `fk_id_factura_idx` ON `pleaser-shoes`.`zapatilla` (`idFactura` ASC) VISIBLE;
+
+SHOW WARNINGS;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+
+insert into talla (idTalla, nacional, americano) values
+(1,1,4),
+(2,2,5),
+(3,3,6),
+(4,4,7),
+(5,5,8),
+(6,6,9),
+(7,7,10);

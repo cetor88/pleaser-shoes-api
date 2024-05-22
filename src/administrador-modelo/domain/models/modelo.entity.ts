@@ -1,6 +1,5 @@
 /* eslint-disable prettier/prettier */
 export default interface IModeloDB {
-    idModelo: number;
-    modelo: string;
+    idModelo: string;
     descripcion: string;
 }

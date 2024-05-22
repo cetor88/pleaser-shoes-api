@@ -3,7 +3,7 @@
 import { TemplateFatura } from "../../../../interfaces/TemplateFatura";
 
 export const jsoModelos1114362: TemplateFatura= {
-    fechaFactura:'25/10/2021',
+    fechaFactura: "2021-10-25",
     noFactura: "1114362",
     modelos:[
         {
