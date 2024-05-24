@@ -18,8 +18,8 @@ var __asyncValues = (this && this.__asyncValues) || function (o) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FacturaServices = void 0;
 const zapatilla_repository_1 = require("../../../../src/administrador-zapatilla/infraestructure/zapatilla.repository");
+const ResponseGeneric_1 = require("../../../administrador/domain/models/ResponseGeneric");
 const _1114362_1 = require("../../../controllers/resources/facturas/1114362/1114362");
-const ResponseGeneric_1 = require("../../../interfaces/ResponseGeneric");
 const factura_repository_1 = require("../../infracestructure/factura.repository");
 class FacturaServices {
     constructor() {

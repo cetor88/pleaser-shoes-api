@@ -16,10 +16,7 @@ export async function connection (): Promise<Pool>{
         typeCast: function castField( field, useDefaultTypeCasting ) {
             // We only want to cast bit fields that have a single-bit in them. If the field
             // has more than one bit, then we cannot assume it is supposed to be a Boolean.
-            console.log("field.type", field.type, typeof(field.type));
-            console.log("field.length === 1", field.length, typeof(field.length));
             if ( ( field.type === "BIT" ) && ( field.length === "1" ) ) {
-                console.log("casteing")
                 const bytes = field.buffer();
                 // A Buffer in Node represents a collection of 8-bit unsigned integers.
                 // Therefore, our single "bit field" comes back as the bits '0000 0001',

@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { ModeloFactura } from "../../interfaces/TemplateFatura";
+import { ModeloFactura } from "../../administrador/domain/models/TemplateFatura";
 
 export const jsoModelos: Array<ModeloFactura> = [
         {

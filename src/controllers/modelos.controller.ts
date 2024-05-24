@@ -4,7 +4,7 @@
 import {Request, Response } from "express";
 import { connection } from "../conection";
 import { Modelo } from '../interfaces/Modelo';
-import { ResponseGeneric } from '../interfaces/ResponseGeneric';
+import { ResponseGeneric } from '../administrador/domain/models/ResponseGeneric';
 
 
 export async function getModelos( req: Request, res: Response ):Promise <Response> {

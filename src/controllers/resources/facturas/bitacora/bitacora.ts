@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { TemplateFatura } from "../../../../interfaces/TemplateFatura";
+import { TemplateFatura } from "../../../../administrador/domain/models/TemplateFatura";
 
 export const jsonBitacoraModelos: TemplateFatura = {
     fechaFactura: '01/09/2021',

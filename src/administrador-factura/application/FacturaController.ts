@@ -1,6 +1,6 @@
 import { Controller, Put, Route } from "tsoa";
 
-import { ResponseGeneric } from "../../../src/interfaces/ResponseGeneric";
+import { ResponseGeneric } from "../../administrador/domain/models/ResponseGeneric";
 import { FacturaServices } from "../domain/services/factura.service";
 
 @Route("facturas")

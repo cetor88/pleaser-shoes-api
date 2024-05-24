@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 
-import { TemplateFatura } from "../../../../interfaces/TemplateFatura";
+import { TemplateFatura } from "../../../../administrador/domain/models/TemplateFatura";
 
 export const jsoModelos1114362: TemplateFatura= {
     fechaFactura: "2021-10-25",

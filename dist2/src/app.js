@@ -38,7 +38,6 @@ const express_1 = __importStar(require("express"));
 const morgan_1 = __importDefault(require("morgan"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 const routes_1 = require("../public3/routes");
-const factura_router_1 = __importDefault(require("./routes/factura.router"));
 const post_routers_1 = __importDefault(require("./routes/post.routers"));
 const tallas_routers_1 = __importDefault(require("./routes/tallas.routers"));
 class App {
@@ -67,7 +66,6 @@ class App {
         }));
         this.app.use('/api/modelos', post_routers_1.default);
         this.app.use('/api/modelo/talla', tallas_routers_1.default);
-        this.app.use('/api', factura_router_1.default);
     }
     swaggerConfig() {
         //this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc));

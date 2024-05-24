@@ -11,7 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getModeloByPrecios = exports.getModeloByTallaOrden = exports.getModeloByTalla = exports.getModeloById = exports.getAllModelos = exports.deleteModeloById = exports.createModelo = exports.getModelos = void 0;
 const conection_1 = require("../conection");
-const ResponseGeneric_1 = require("../interfaces/ResponseGeneric");
+const ResponseGeneric_1 = require("../administrador/domain/models/ResponseGeneric");
 function getModelos(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         const conn = yield conection_1.connection();

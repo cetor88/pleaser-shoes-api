@@ -3,9 +3,9 @@ import IModeloDB from "src/administrador-modelo/domain/models/modelo.entity";
 import IZapatillaDB from "src/administrador-zapatilla/domain/models/zapatilla.entity";
 
 import { ZapatillaRepositoryMySql } from "../../../../src/administrador-zapatilla/infraestructure/zapatilla.repository";
+import { ResponseGeneric } from "../../../administrador/domain/models/ResponseGeneric";
+import { ModeloFactura } from "../../../administrador/domain/models/TemplateFatura";
 import { jsoModelos1114362 } from "../../../controllers/resources/facturas/1114362/1114362";
-import { ResponseGeneric } from "../../../interfaces/ResponseGeneric";
-import { ModeloFactura } from "../../../interfaces/TemplateFatura";
 import { FacturaResposiroryMsql } from "../../infracestructure/factura.repository";
 import { IFacturaDb } from "../models/factura.repository";
 import { TemplateFileStream } from "../models/TemplateFileStream";

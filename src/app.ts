@@ -5,7 +5,6 @@ import morgan from 'morgan';
 import swaggerUi from "swagger-ui-express";
 
 import { RegisterRoutes } from "../public3/routes";
-import facturaRouter from './routes/factura.router';
 import modeloRouter from './routes/post.routers';
 import tallaRouter from './routes/tallas.routers';
 
@@ -42,8 +41,6 @@ export class App{
     );
     this.app.use('/api/modelos', modeloRouter);
     this.app.use('/api/modelo/talla', tallaRouter);
-    this.app.use('/api', facturaRouter);
-
   }
 
   swaggerConfig(): void {
@@ -76,7 +73,7 @@ export class App{
       .catch((error: any) => next(error));
   }
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  async  listen() {
+  async listen() {
     await this.app.listen(this.app.get('port'), ()=> console.log('Server on Port', this.app.get('port')))
   }
 }
