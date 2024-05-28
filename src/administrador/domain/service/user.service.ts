@@ -1,15 +1,10 @@
 // import * as dotenv from "dotenv";
-import "dotenv/config";
-
 import jwt from "jsonwebtoken";
 
 import { UserRepositoryMysql } from "../../infraestructure/user.repository";
 import { User } from "../interface/user.interface";
 import { ResponseGeneric } from "../models/ResponseGeneric";
 import { IUserDB } from "../models/user.entity";
-
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require("dotenv").config();
 
 export class UsuarioService {
   userRepositoryMysql: UserRepositoryMysql;
@@ -38,6 +33,6 @@ export class UsuarioService {
   }
 
   public async genarateToken(user: any): Promise<string> {
-    return jwt.sign(user, "tetst", { expiresIn: "5m" });
+    return jwt.sign(user, `"${process.env.JWT_SECRET}"`, { expiresIn: "5m" });
   }
 }

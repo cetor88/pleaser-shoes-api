@@ -1,13 +1,15 @@
 /* eslint-disable prettier/prettier */
-import cors from 'cors';
+import cors from "cors";
+import dotenv from "dotenv";
 import express,{ Application, Request, Response, urlencoded  } from 'express';
-import morgan from 'morgan';
+import morgan from "morgan";
 import swaggerUi from "swagger-ui-express";
 
 import { RegisterRoutes } from "../public3/routes";
-import modeloRouter from './routes/post.routers';
-import tallaRouter from './routes/tallas.routers';
+import modeloRouter from "./routes/post.routers";
+import tallaRouter from "./routes/tallas.routers";
 
+dotenv.config();
 export class App{
   private app: Application;
 

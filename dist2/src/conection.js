@@ -18,11 +18,12 @@ const promise_1 = require("mysql2/promise");
  */
 function connection() {
     return __awaiter(this, void 0, void 0, function* () {
+        const CONNECTION_LIMIT = Number(process.env.CONNECTION_LIMIT);
         return promise_1.createPool({
-            host: 'localhost',
-            user: 'root',
-            password: '12345678',
-            database: 'pleaser-shoes',
+            host: process.env.HOST,
+            user: process.env.USER,
+            password: process.env.PASSWORD,
+            database: process.env.DATABASE,
             connectionLimit: 3,
             typeCast: function castField(field, useDefaultTypeCasting) {
                 // We only want to cast bit fields that have a single-bit in them. If the field

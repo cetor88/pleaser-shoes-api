@@ -14,6 +14,8 @@ const ModeloController_1 = require("./../src/administrador-modelo/application/Mo
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const FacturaController_1 = require("./../src/administrador-factura/application/FacturaController");
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+const usuario_controller_1 = require("./../src/administrador/application/usuario.controller");
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 const models = {
     "IZapatillaDB": {
         "dataType": "refObject",
@@ -47,6 +49,15 @@ const models = {
             "payload": { "dataType": "any" },
             "code": { "dataType": "double" },
             "message": { "dataType": "string" },
+        },
+        "additionalProperties": false,
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "User": {
+        "dataType": "refObject",
+        "properties": {
+            "correo": { "dataType": "string", "required": true },
+            "password": { "dataType": "string" },
         },
         "additionalProperties": false,
     },
@@ -202,6 +213,29 @@ function RegisterRoutes(app) {
             const controller = new FacturaController_1.FacturasController();
             templateService.apiHandler({
                 methodName: 'getFacturas',
+                controller,
+                response,
+                next,
+                validatedArgs,
+                successStatus: undefined,
+            });
+        }
+        catch (err) {
+            return next(err);
+        }
+    });
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    app.post('/admin/login', ...(runtime_1.fetchMiddlewares(usuario_controller_1.UsuarioController)), ...(runtime_1.fetchMiddlewares(usuario_controller_1.UsuarioController.prototype.login)), function UsuarioController_login(request, response, next) {
+        const args = {
+            user: { "in": "body", "name": "user", "required": true, "ref": "User" },
+        };
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        let validatedArgs = [];
+        try {
+            validatedArgs = templateService.getValidatedArgs({ args, request, response });
+            const controller = new usuario_controller_1.UsuarioController();
+            templateService.apiHandler({
+                methodName: 'login',
                 controller,
                 response,
                 next,

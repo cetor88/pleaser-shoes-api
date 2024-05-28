@@ -12,3 +12,6 @@ dist2
 
 # ignore public3
 public3
+
+# ignore .env
+.env
