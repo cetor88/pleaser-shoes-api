@@ -8,12 +8,12 @@ import IModeloDB from "src/administrador-modelo/domain/models/modelo.entity";
 import { TemplateFileStream } from "../domain/models/TemplateFileStream";
 import { IFacturaRepository } from "../domain/repositories/FacturaInterface";
 import fs from 'fs';
-import { storage_Ref } from "../../../src/controllers/resources/service.acount";
 import csv from "csv-parse";
 import request from "request";
 import { connection } from "../../conection";
 import { SaveOptions } from "@google-cloud/storage";
 import { IFacturaDb } from "../domain/models/factura.repository";
+import { storage_Ref } from "../fireBaseConfig/service.acount";
 
 export class FacturaResposiroryMsql implements IFacturaRepository {
 
@@ -57,9 +57,9 @@ export class FacturaResposiroryMsql implements IFacturaRepository {
                         predefinedAcl: 'publicRead',
                         public: true
                     };
-                    const bucket = storage_Ref.file("pleaser-shoes/" + modeloCSV.modelo + ".jpeg");
-                    await bucket.save(body, options);
-                    const metaData = await bucket.getMetadata();
+                    const ref = storage_Ref.file("pleaser-shoes/" + modeloCSV.modelo + ".jpeg");
+                    await ref.save(body, options);
+                    const metaData = await ref.getMetadata();
                     console.log(metaData[0].mediaLink);
                 }
             }

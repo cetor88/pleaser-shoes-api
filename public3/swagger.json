@@ -169,13 +169,22 @@
 					}
 				},
 				"security": [],
-				"parameters": []
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			},
 			"post": {
 				"operationId": "SaveZapatillas",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"201": {
+						"description": "Created",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -186,7 +195,16 @@
 					}
 				},
 				"security": [],
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"requestBody": {
 					"required": true,
 					"content": {
@@ -201,8 +219,8 @@
 			"put": {
 				"operationId": "UpdateZapatillas",
 				"responses": {
-					"200": {
-						"description": "Ok",
+					"202": {
+						"description": "Created",
 						"content": {
 							"application/json": {
 								"schema": {
@@ -213,7 +231,16 @@
 					}
 				},
 				"security": [],
-				"parameters": [],
+				"parameters": [
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
 				"requestBody": {
 					"required": true,
 					"content": {
@@ -243,6 +270,14 @@
 				},
 				"security": [],
 				"parameters": [
+					{
+						"in": "header",
+						"name": "Authorization",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
 					{
 						"in": "path",
 						"name": "modelo",

@@ -110,6 +110,8 @@ export function RegisterRoutes(app: Router) {
 
             function ZapatillaController_getZapatillas(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    _req: {"in":"request","name":"_req","required":true,"dataType":"object"},
+                    _authorization: {"in":"header","name":"Authorization","required":true,"dataType":"string"},
             };
 
             // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -139,6 +141,8 @@ export function RegisterRoutes(app: Router) {
 
             function ZapatillaController_getZapatillasByModel(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    _req: {"in":"request","name":"_req","required":true,"dataType":"object"},
+                    _authorization: {"in":"header","name":"Authorization","required":true,"dataType":"string"},
                     modelo: {"in":"path","name":"modelo","required":true,"dataType":"string"},
             };
 
@@ -169,6 +173,8 @@ export function RegisterRoutes(app: Router) {
 
             function ZapatillaController_saveZapatillas(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    _req: {"in":"request","name":"_req","required":true,"dataType":"object"},
+                    _authorization: {"in":"header","name":"Authorization","required":true,"dataType":"string"},
                     zapatilla: {"in":"body","name":"zapatilla","required":true,"ref":"IZapatillaDB"},
             };
 
@@ -186,7 +192,7 @@ export function RegisterRoutes(app: Router) {
                 response,
                 next,
                 validatedArgs,
-                successStatus: undefined,
+                successStatus: 201,
               });
             } catch (err) {
                 return next(err);
@@ -199,6 +205,8 @@ export function RegisterRoutes(app: Router) {
 
             function ZapatillaController_updateZapatillas(request: ExRequest, response: ExResponse, next: any) {
             const args: Record<string, TsoaRoute.ParameterSchema> = {
+                    _req: {"in":"request","name":"_req","required":true,"dataType":"object"},
+                    _authorization: {"in":"header","name":"Authorization","required":true,"dataType":"string"},
                     zapatilla: {"in":"body","name":"zapatilla","required":true,"ref":"IZapatillaDB"},
             };
 
@@ -216,7 +224,7 @@ export function RegisterRoutes(app: Router) {
                 response,
                 next,
                 validatedArgs,
-                successStatus: undefined,
+                successStatus: 202,
               });
             } catch (err) {
                 return next(err);

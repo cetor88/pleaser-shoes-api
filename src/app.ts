@@ -46,8 +46,6 @@ export class App{
   }
 
   swaggerConfig(): void {
-
-    //this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc));
     this.app.use( '/docs', swaggerUi.serve, async (_req: Request, res: Response) => {
       return res.send(
         swaggerUi.generateHTML(await require ("../public3/swagger.json"))
@@ -61,7 +59,8 @@ export class App{
     ))
   }
 
-  promiseHandler(promise: any, statusCode: any, response: any, next: any) {
+  /*promiseHandler(promise: any, statusCode: any, response: any, next: any) {
+    console.log("Promise handler XDd")
     return promise
       .then((data: any) => {
         if (data) {
@@ -73,9 +72,9 @@ export class App{
         }
       })
       .catch((error: any) => next(error));
-  }
+  }*/
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   async listen() {
-    await this.app.listen(this.app.get('port'), ()=> console.log('Server on Port', this.app.get('port')))
+    this.app.listen(this.app.get('port'), ()=> console.log('Server on Port', this.app.get('port')))
   }
 }

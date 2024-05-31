@@ -18,15 +18,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -70,33 +61,30 @@ class App {
         this.app.use('/api/modelo/talla', tallas_routers_1.default);
     }
     swaggerConfig() {
-        //this.app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc));
-        this.app.use('/docs', swagger_ui_express_1.default.serve, (_req, res) => __awaiter(this, void 0, void 0, function* () {
-            return res.send(swagger_ui_express_1.default.generateHTML(yield require("../public3/swagger.json")));
-        }), swagger_ui_express_1.default.setup({
+        this.app.use('/docs', swagger_ui_express_1.default.serve, async (_req, res) => {
+            return res.send(swagger_ui_express_1.default.generateHTML(await require("../public3/swagger.json")));
+        }, swagger_ui_express_1.default.setup({
             explorer: true,
             customCssUrl: "https://cdn.jsdelivr.net/npm/swagger-ui-themes@3.0.0/themes/3.x/theme-newspaper.css",
         }));
     }
-    promiseHandler(promise, statusCode, response, next) {
-        return promise
-            .then((data) => {
-            if (data) {
-                response.json(data);
-                response.status(statusCode || 200);
-            }
-            else {
-                response.status(statusCode || 204);
-                response.end();
-            }
+    /*promiseHandler(promise: any, statusCode: any, response: any, next: any) {
+      console.log("Promise handler XDd")
+      return promise
+        .then((data: any) => {
+          if (data) {
+            response.json(data);
+            response.status(statusCode || 200);
+          } else {
+            response.status(statusCode || 204);
+            response.end();
+          }
         })
-            .catch((error) => next(error));
-    }
+        .catch((error: any) => next(error));
+    }*/
     // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    listen() {
-        return __awaiter(this, void 0, void 0, function* () {
-            yield this.app.listen(this.app.get('port'), () => console.log('Server on Port', this.app.get('port')));
-        });
+    async listen() {
+        this.app.listen(this.app.get('port'), () => console.log('Server on Port', this.app.get('port')));
     }
 }
 exports.App = App;

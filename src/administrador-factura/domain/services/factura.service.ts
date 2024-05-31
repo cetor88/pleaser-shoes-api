@@ -29,7 +29,6 @@ export class FacturaServices {
             idFactura: Number(jsonFactura.noFactura),
             fechaCompra: jsoModelos1114362.fechaFactura,
           };
-          console.log(`******* ${facturaModel}`);
           const factura: IFacturaDb =
             await this.facturaResposiroryMsql.saveFacturaDb(facturaModel);
 

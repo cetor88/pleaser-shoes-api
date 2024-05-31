@@ -94,7 +94,10 @@ function RegisterRoutes(app) {
     });
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get('/zapatillas', ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController)), ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController.prototype.getZapatillas)), function ZapatillaController_getZapatillas(request, response, next) {
-        const args = {};
+        const args = {
+            _req: { "in": "request", "name": "_req", "required": true, "dataType": "object" },
+            _authorization: { "in": "header", "name": "Authorization", "required": true, "dataType": "string" },
+        };
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
         let validatedArgs = [];
         try {
@@ -116,6 +119,8 @@ function RegisterRoutes(app) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.get('/zapatillas/:modelo', ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController)), ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController.prototype.getZapatillasByModel)), function ZapatillaController_getZapatillasByModel(request, response, next) {
         const args = {
+            _req: { "in": "request", "name": "_req", "required": true, "dataType": "object" },
+            _authorization: { "in": "header", "name": "Authorization", "required": true, "dataType": "string" },
             modelo: { "in": "path", "name": "modelo", "required": true, "dataType": "string" },
         };
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -139,6 +144,8 @@ function RegisterRoutes(app) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.post('/zapatillas', ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController)), ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController.prototype.saveZapatillas)), function ZapatillaController_saveZapatillas(request, response, next) {
         const args = {
+            _req: { "in": "request", "name": "_req", "required": true, "dataType": "object" },
+            _authorization: { "in": "header", "name": "Authorization", "required": true, "dataType": "string" },
             zapatilla: { "in": "body", "name": "zapatilla", "required": true, "ref": "IZapatillaDB" },
         };
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -152,7 +159,7 @@ function RegisterRoutes(app) {
                 response,
                 next,
                 validatedArgs,
-                successStatus: undefined,
+                successStatus: 201,
             });
         }
         catch (err) {
@@ -162,6 +169,8 @@ function RegisterRoutes(app) {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     app.put('/zapatillas', ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController)), ...(runtime_1.fetchMiddlewares(ZapatillaController_1.ZapatillaController.prototype.updateZapatillas)), function ZapatillaController_updateZapatillas(request, response, next) {
         const args = {
+            _req: { "in": "request", "name": "_req", "required": true, "dataType": "object" },
+            _authorization: { "in": "header", "name": "Authorization", "required": true, "dataType": "string" },
             zapatilla: { "in": "body", "name": "zapatilla", "required": true, "ref": "IZapatillaDB" },
         };
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -175,7 +184,7 @@ function RegisterRoutes(app) {
                 response,
                 next,
                 validatedArgs,
-                successStatus: undefined,
+                successStatus: 202,
             });
         }
         catch (err) {

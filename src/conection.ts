@@ -9,12 +9,17 @@ export async function connection (): Promise<Pool>{
 
     const CONNECTION_LIMIT = Number(process.env.CONNECTION_LIMIT);
 
+    const HOST = process.env.HOST_BD;
+    const USER = process.env.USER_BD;
+    const PASSWORD = process.env.PASSWORD_BD;
+    const DATABASE = process.env.DATABASE;
+
     return createPool({
-        host: process.env.HOST,
-        user: process.env.USER,
-        password: process.env.PASSWORD,
-        database: process.env.DATABASE,
-        connectionLimit: 3,
+        host: `${HOST}`,
+        user: `${USER}`,
+        password: `${PASSWORD}`,
+        database: `${DATABASE}`,
+        connectionLimit: CONNECTION_LIMIT,
         typeCast: function castField( field, useDefaultTypeCasting ) {
             // We only want to cast bit fields that have a single-bit in them. If the field
             // has more than one bit, then we cannot assume it is supposed to be a Boolean.
@@ -24,7 +29,7 @@ export async function connection (): Promise<Pool>{
                 // Therefore, our single "bit field" comes back as the bits '0000 0001',
                 // which is equivalent to the number 1.
                 return( bytes[ 0 ] === 1 );
-            }    
+            }
             return( useDefaultTypeCasting() );
         }
     })

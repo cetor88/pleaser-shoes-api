@@ -8,7 +8,7 @@ node_modules
 dist
 
 # ignore dist2
-dist2
+dist2/**
 
 # ignore public3
 public3

@@ -1,4 +1,3 @@
-// import * as dotenv from "dotenv";
 import jwt from "jsonwebtoken";
 
 import { UserRepositoryMysql } from "../../infraestructure/user.repository";
